@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SellersService, Seller } from './sellers.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +14,27 @@ export class AppComponent implements OnInit {
   private sellers: Seller[];
   private seller: Seller;
 
-  constructor(private service : SellersService) {}
+  constructor(private service : SellersService,
+              private modalService: NgbModal) {}
+
+  addSeller() {
+    const modalInstance = this.modalService.open(SellerDialogComponent);
+    modalInstance.componentInstance.seller = {
+        name: "Daníel",
+        category: "Hannyrðir",
+        imagePath: "http://example.com",
+        id: 7
+    };
+    // passa að taka afrit af gögnunum þannig ef notandi ýtir á cancel þá breytast
+    // ekki upprunalegu gögnin
+    modalInstance.result.then(obj => {
+        console.log('Dialog was closed using OK');
+        console.log(obj);
+    }).catch(err => {
+        console.log('Dialog was cancelled');
+        console.log(err);
+    })
+  }
 
   ngOnInit() {
       // Kallað í þennan handler ef allt gekk upp
