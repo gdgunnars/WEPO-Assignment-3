@@ -23,7 +23,7 @@
 
 <template ngbModalContainer></template>
 
-<div *ngFor="let p of products">
+<div *ngFor="let p of sellerProducts">
   <app-product-card 
     [product]="p"
     (productUpdated)="onProductEdited($event)">

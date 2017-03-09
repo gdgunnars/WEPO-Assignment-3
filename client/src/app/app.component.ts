@@ -5,13 +5,18 @@ import { SellerProduct } from './interfaces/sellerproduct';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
 
-@Component({selector: 'app-root', templateUrl: './app.component.html', styleUrls: ['./app.component.css']})
+@Component({
+	selector: 'app-root',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.css']
+})
+
 export class AppComponent implements OnInit {
 	title = 'app works!';
 
 	private sellers: Seller[];
 	private seller: Seller;
-	private products: SellerProduct[];
+	private sellerProducts: SellerProduct[];
 
 	constructor(private service : SellersService, private modalService : NgbModal) {}
 
@@ -46,8 +51,17 @@ export class AppComponent implements OnInit {
 		*/
 
 		this.service.getSellerProducts(1).subscribe(result => {
-			this.products = result;
+			this.sellerProducts = result;
+		}, err => {
+			console.log('Didnt work');
+			// TODO: display notification!
 		});
+
+		/*
+		this.service.getSellerDetails(1).subscribe(result => {
+
+		});
+		*/
 	}
 
 	onProductEdited(p: SellerProduct) {

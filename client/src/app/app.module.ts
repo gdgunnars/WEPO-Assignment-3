@@ -8,12 +8,18 @@ import { AppComponent } from './app.component';
 import { SellersService } from './sellers.service';
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
 import { ProductCardComponent } from './product-card/product-card.component';
+import { ListSellersComponent } from './list-sellers/list-sellers.component';
+import { SellerDetailsComponent } from './seller-details/seller-details.component';
+import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SellerDialogComponent,
-    ProductCardComponent
+    ProductCardComponent,
+    ListSellersComponent,
+    SellerDetailsComponent,
+    ProductsDialogComponent
   ],
   imports: [
     BrowserModule,
