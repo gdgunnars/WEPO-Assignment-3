@@ -7,11 +7,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponent } from './app.component';
 import { SellersService } from './sellers.service';
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SellerDialogComponent
+    SellerDialogComponent,
+    ProductCardComponent
   ],
   imports: [
     BrowserModule,

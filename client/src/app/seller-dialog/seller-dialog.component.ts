@@ -1,34 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-//import { Seller } from '../sellers.service';
+import {Component, OnInit} from '@angular/core';
+import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
+import {Seller} from '../interfaces/seller';
 
-export class Seller {
-  name: string;
-  id: number;
-  category: string;
-  imagePath: string;
-}
-
-@Component({
-  selector: 'app-seller-dialog',
-  templateUrl: './seller-dialog.component.html',
-  styleUrls: ['./seller-dialog.component.css']
-})
+@Component({selector: 'app-seller-dialog', templateUrl: './seller-dialog.component.html', styleUrls: ['./seller-dialog.component.css']})
 export class SellerDialogComponent implements OnInit {
 
-  seller: Seller;
+  seller : Seller;
 
-  constructor(public activeModal: NgbActiveModal) { }
+  constructor(public activeModal : NgbActiveModal) {}
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   onCancel() {
-    this.activeModal.dismiss();
+    this
+      .activeModal
+      .dismiss();
   }
 
   onOk() {
-    this.activeModal.close(this.seller);
+    this
+      .activeModal
+      .close(this.seller);
   }
 
 }
