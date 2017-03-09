@@ -1,3 +1,16 @@
 <h1>
   {{title}}
 </h1>
+
+<!--
+<ul>
+    <li *ngFor="let s of sellers">
+        {{s.name}}
+    </li>
+</ul>
+-->
+<div *ngIf="seller">
+  <h2>{{seller.name}}</h2>
+
+  <img src="{{seller.imagePath}}" alt="image" />
+</div>
