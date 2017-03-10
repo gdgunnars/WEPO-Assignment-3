@@ -14,7 +14,8 @@ import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component'
 export class ListSellersComponent implements OnInit {
 	private sellers: Seller[];
 
-	constructor(private service : SellersService, private modalService : NgbModal) {}
+	constructor(private service: SellersService,
+				private modalService: NgbModal) {}
 
 	ngOnInit() {
 		this.service.getSellers().subscribe( result => {

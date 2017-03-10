@@ -1,7 +1,3 @@
-<p>
-	list-sellers works!
-</p>
-
 <table class="table table-hover table-responsive">
 	<thead class="thead-inverse">
 		<tr>
@@ -11,8 +7,12 @@
 	</thead>
 	<tbody class="table-striped">
 		<tr *ngFor="let s of sellers" >
-			<td> {{s.name}} </td>
-			<td> {{s.category}} </td>
+			<td> 
+        <a [routerLink]="['/sellers/details', s.id]">{{s.name}}</a>
+      </td>
+			<td> 
+        {{s.category}} 
+      </td>
 		</tr>
 	</tbody>
 </table>
