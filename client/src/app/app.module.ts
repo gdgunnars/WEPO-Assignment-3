@@ -13,6 +13,7 @@ import { ProductsDialogComponent } from './products-dialog/products-dialog.compo
 import { SellerDetailsComponent } from './seller-details/seller-details.component';
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
 	declarations: [
@@ -22,7 +23,8 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 		ProductsDialogComponent,
 		SellerDetailsComponent,
 		SellerDialogComponent,
-		NavBarComponent
+		NavBarComponent,
+		FooterComponent
 	],
 	imports: [
 		BrowserModule,
