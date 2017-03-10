@@ -1,5 +1,10 @@
-<p>
-  seller-details works!
-</p>
-
-{{sellerId}}
+<div class="container">
+	<div class="row" *ngIf="seller"> 
+	 <div class="col-sm-2">    
+		<img class="img-fluid" src="{{seller.imagePath}}" alt="SellerImage" /> 
+	 </div>
+	 <div class="col-sm-10">
+	 <p>{{seller.name}}</p>
+	 </div>
+	</div>
+</div>
