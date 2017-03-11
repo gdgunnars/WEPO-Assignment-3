@@ -45,4 +45,21 @@ export class ListSellersComponent implements OnInit {
 			console.log('I was not able to get Sellers');
 		});
 	}
+
+	addSeller() {
+		const modalInstance = this.modalService.open(SellerDialogComponent);
+		// modalInstance.componentInstance.sellerName =
+		modalInstance.result.then(obj => {
+			this.service.addSeller(obj).subscribe( result => {
+				console.log('The seller was added successfully');
+				this.sellers.push(result);
+			}, err => {
+				console.log('there was some error while adding the seller');
+			});
+			console.log(obj);
+		}).catch( err => {
+			console.log('Seller modal was closed');
+			console.log(err);
+		});
+	}
 }

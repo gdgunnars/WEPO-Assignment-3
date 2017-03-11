@@ -4,7 +4,7 @@
 			<h2>Söluaðilar</h2>
 		</div>
 		<div class="text-right">
-			<button type="button" class="btn btn-success"> Bæta við Söluaðila</button>
+			<button type="button" class="btn btn-primary" (click)="addSeller()"> Bæta við Söluaðila</button>
 		</div>
 	</div>
 	<div *ngIf="finishedLoading">
@@ -41,3 +41,4 @@
 		</div>
 	</div>
 </div>
+<template ngbModalContainer></template>

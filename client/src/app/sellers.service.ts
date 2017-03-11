@@ -34,4 +34,16 @@ export class SellersService {
 			return <SellerProduct[]> response.json();
 		});
 	}
+
+	addSeller(newSeller: Seller): Observable<Seller> {
+		let body = {
+			name: newSeller.name,
+			category: newSeller.category,
+			imagePath: newSeller.imagePath
+		}
+		return this.http.post('http://localhost:5000/api/sellers', body)
+			.map(response => {
+			return <Seller> response.json();
+		});
+	}
 }

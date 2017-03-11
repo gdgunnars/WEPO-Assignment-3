@@ -1,7 +1,28 @@
-<div *ngIf="product">
-  <h3>{{product.name}}</h3>
-  <img [src]="product.imagePath" alt="product image" style="width:80px" />
-  <i>{{product.price}}</i>
+<div *ngIf="product"  class="card mb-3">
+	<div class="item-image">
+		<img class="card-img-top img-responsive img-card" [src]="product.imagePath" alt="Card image cap">
+	</div>
+	<div class="card-block">
+		<h4 class="card-title">{{product.name}}</h4>
 
-  <button class="btn-primary" (click)="onEdit()">Breyta vöru</button>
+		<div class="row">
+			<div class="col-md-6 col-xs-6">
+				<p> Verð: {{product.price}} Kr.</p>
+			</div>
+			<div class="col-md-6 col-xs-6 text-right">
+				<p>
+					<label>Fjöldi: {{product.quantityInStock}} stk</label>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<a class="btn btn-primary btn-product" (click)="onEdit()" >Edit</a> 
+			</div>
+			<div class="col-md-6">
+				<a href="#" class="btn btn-success btn-product">Buy</a>
+			</div>
+		</div>
+		<p class="card-text"><small class="text-muted">{{product.quantitySold}} stk hafa verið seld</small></p>
+	</div>
 </div>
