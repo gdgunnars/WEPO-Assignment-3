@@ -1,10 +1,54 @@
-<div class="container">
+<div class="container-fluid">
 	<div class="row" *ngIf="seller"> 
-	 <div class="col-sm-2">    
-		<img class="img-fluid" src="{{seller.imagePath}}" alt="SellerImage" /> 
-	 </div>
-	 <div class="col-sm-10">
-	 <p>{{seller.name}}</p>
-	 </div>
+		<div class="col-sm-4">    
+			<img class="img" src="{{seller.imagePath}}" alt="SellerImage" /> 
+		</div>
+		<div class="col-sm-6">
+			<h3>{{seller.name}}</h3>
+			<br />
+			<h3>{{seller.category}} </h3>
+		</div>
+		<div class="col-sm-2 text-right">
+			<button type="button" class="btn btn-success"> Bæta við vöru </button>
+		</div>
+	</div>
+	<br />
+	<div>
+		<ngb-tabset>
+			<ngb-tab title="Allar Vörur">
+				<template ngbTabContent>
+					<div class="container-fluid">
+						<div class="row">
+							<div *ngFor="let prod of products" class="col-sm-5 col-md-3">
+								<app-product-card 
+									[product]="prod" 
+									(productUpdate)="onProductEdted($event)">
+								</app-product-card>
+							</div>
+						</div>
+					</div>
+				</template>
+			</ngb-tab>
+			<ngb-tab>
+				<template ngbTabTitle>Mest seldu vörurnar</template>
+				<template ngbTabContent>
+					<div class="container-fluid">
+						<div class="row">
+							<div *ngFor="let prod of top10" class="col-sm-5 col-md-3">
+								<app-product-card 
+									[product]="prod" 
+									(productUpdate)="onProductEdted($event)">
+								</app-product-card>
+							</div>
+						</div>
+					</div>
+				</template>
+			</ngb-tab>
+			<ngb-tab title="Disabled" [disabled]="true">
+				<template ngbTabContent>
+				<p>This shit ain't active.</p>
+				</template>
+			</ngb-tab>
+		</ngb-tabset>
 	</div>
 </div>

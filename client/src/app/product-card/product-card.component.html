@@ -1,7 +1,33 @@
-<div *ngIf="product">
-  <h3>{{product.name}}</h3>
-  <img [src]="product.imagePath" alt="product image" style="width:80px" />
-  <i>{{product.price}}</i>
 
-  <button class="btn-primary" (click)="onEdit()">Breyta vöru</button>
-</div>
+  <div *ngIf="product" class="thumbnail" >
+	<img [src]="product.imagePath" alt="Product image" class="image-style img-responsive" width="200" />
+	<div class="caption">
+		<div class="row">
+			<div class="col-md-6 col-xs-6">
+				<h3>{{product.name}}</h3>
+			</div>
+			<div class="col-md-6 col-xs-6 text-right">
+				<h3>
+				<label>{{product.price}} kr</label>
+				</h3>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-6 col-xs-6">
+				<p> Fjöldi til: {{product.quantityInStock}} stk</p>
+			</div>
+			<div class="col-md-6 col-xs-6 text-right">
+				<p>
+					<label>Fjöldi seld: {{product.quantitySold}} stk</label>
+				</p>
+			</div>
+		</div>
+		<div class="row">
+		<div class="col-md-6">
+			<a class="btn btn-primary btn-product"><span class="glyphicon glyphicon-thumbs-up"></span> Edit ?</a> 
+		</div>
+		<div class="col-md-6">
+			<a href="#" class="btn btn-success btn-product"><span class="glyphicon glyphicon-shopping-cart"></span> Buy</a></div>
+		</div>
+    </div>
+  </div>
