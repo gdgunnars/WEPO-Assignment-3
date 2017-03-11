@@ -33,14 +33,12 @@
 			<ngb-tab>
 				<template ngbTabTitle>Mest seldu vörurnar</template>
 				<template ngbTabContent>
-					<div class="container-fluid">
-						<div class="row">
-							<div *ngFor="let prod of top10" class="col-sm-5 col-md-3 product-container">
-								<app-product-card 
-									[product]="prod" 
-									(productUpdate)="onProductEdted($event)">
-								</app-product-card>
-							</div>
+					<div class="row">
+						<div *ngFor="let prod of top10" class="col-sm-5 col-md-3 product-container">
+							<app-product-card 
+								[product]="prod" 
+								(productUpdate)="onProductEdted($event)">
+							</app-product-card>
 						</div>
 					</div>
 				</template>
