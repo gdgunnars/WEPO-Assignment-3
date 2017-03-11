@@ -1,18 +1,34 @@
-<table class="table table-hover table-responsive">
-	<thead class="thead-inverse">
-		<tr>
-			<th> Seljandi </th>
-			<th> Flokkur </th>
-		</tr>
-	</thead>
-	<tbody class="table-striped">
-		<tr *ngFor="let s of sellers" >
-			<td> 
-        <a [routerLink]="['/sellers/details', s.id]">{{s.name}}</a>
-      </td>
-			<td> 
-        {{s.category}} 
-      </td>
-		</tr>
-	</tbody>
-</table>
+<div class="container-fluid"> 
+	<div class="col-sm-12">
+		<div>
+			<h2>Söluaðilar</h2>
+		</div>
+		<div class="text-right">
+			<button type="button" class="btn btn-success"> Bæta við Söluaðila</button>
+		</div>
+	</div>
+	<div class="col-sm-12">
+		<table class="table table-hover">
+			<thead class="thead-inverse">
+				<tr>
+					<th> # </th>
+					<th> Seljandi </th>
+					<th> Flokkur </th>
+				</tr>
+			</thead>
+			<tbody class="table-striped">
+				<tr *ngFor="let s of sellers" (click)="GoToSellertDtl([s.id])">
+					<td>
+						<img class="img-fluid img-thumbnail rounded " src="{{s.imagePath}}" alt="Seller Profile" width="50" />
+					</td>
+					<td> 
+						{{s.name}}
+					</td>
+					<td> 
+						{{s.category}}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
