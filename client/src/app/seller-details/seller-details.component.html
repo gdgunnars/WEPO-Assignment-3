@@ -1,14 +1,15 @@
 <div class="container-fluid">
 	<div class="row" *ngIf="seller"> 
-		<div class="col-sm-4">    
+		<div class="col-sm-4 ">    
+			<div class="item-image">
 			<img class="img" src="{{seller.imagePath}}" alt="SellerImage" /> 
+			</div>
 		</div>
-		<div class="col-sm-6">
-			<h3>{{seller.name}}</h3>
-			<br />
-			<h3>{{seller.category}} </h3>
+		<div class="col-sm-6 col align-self-center">
+			<h3>Seljandi: {{seller.name}}</h3>
+			<h3>Tegund: {{seller.category}} </h3>
 		</div>
-		<div class="col-sm-2 text-right">
+		<div class="col-sm-2 col text-right align-self-end">
 			<button type="button" class="btn btn-success"> Bæta við vöru </button>
 		</div>
 	</div>
@@ -34,7 +35,7 @@
 				<template ngbTabContent>
 					<div class="container-fluid">
 						<div class="row">
-							<div *ngFor="let prod of top10" class="col-sm-5 col-md-3">
+							<div *ngFor="let prod of top10" class="col-sm-5 col-md-3 product-container">
 								<app-product-card 
 									[product]="prod" 
 									(productUpdate)="onProductEdted($event)">
