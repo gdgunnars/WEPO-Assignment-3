@@ -43,9 +43,17 @@
 					</div>
 				</template>
 			</ngb-tab>
-			<ngb-tab title="Disabled" [disabled]="true">
+			<ngb-tab>
+				<template ngbTabTitle>Top 10</template>
 				<template ngbTabContent>
-				<p>This shit ain't active.</p>
+					<div class="row">
+						<div *ngFor="let prod of top10Spent" class="col-sm-5 col-md-3 product-container">
+							<app-product-card 
+								[product]="prod" 
+								(productUpdate)="onProductEdted($event)">
+							</app-product-card>
+						</div>
+					</div>
 				</template>
 			</ngb-tab>
 		</ngb-tabset>
