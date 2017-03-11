@@ -65,4 +65,8 @@ export class SellerDetailsComponent implements OnInit {
 		});
 		this.top10Spent = this.top10Spent.slice(0, 10);
 	}
+
+	onProductEdted(p: SellerProduct) {
+		console.log("ID :" + p.id +  "with name: " + p.name);
+	}
 }

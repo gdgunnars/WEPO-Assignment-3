@@ -37,4 +37,21 @@ export class ListSellersComponent implements OnInit {
 		}
 	}
 
+	addSeller() {
+		const modalInstance = this.modalService.open(SellerDialogComponent);
+		//modalInstance.componentInstance.sellerName = 
+		modalInstance.result.then(obj => {
+			this.service.addSeller(obj).subscribe( obj => {
+				console.log("The seller was added successfully");
+				this.sellers.push(obj);
+			}, err => {
+				console.log("there was some error while adding the seller");
+			});
+			console.log(obj);
+		}).catch( err => {
+			console.log("Seller modal was closed");
+			console.log(err);
+		});
+	}
+
 }
