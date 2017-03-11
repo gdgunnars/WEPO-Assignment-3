@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 	private seller: Seller;
 	private sellerProducts: SellerProduct[];
 
-	constructor(private service : SellersService, private modalService : NgbModal) {}
+	constructor(private service: SellersService, private modalService: NgbModal) {}
 
 	ngOnInit() {
         // Kallað í þennan handler ef allt gekk upp

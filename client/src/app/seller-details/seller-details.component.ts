@@ -13,7 +13,8 @@ export class SellerDetailsComponent implements OnInit {
 	sellerId: number;
 	seller: Seller;
 
-	constructor(private router: Router, private service: SellersService,
+	constructor(private router: Router,
+				private service: SellersService,
 				private route: ActivatedRoute) { }
 
 	ngOnInit() {
@@ -22,7 +23,7 @@ export class SellerDetailsComponent implements OnInit {
 			console.log(result);
 			this.seller = result;
 		}, err => {
-			console.log("Was unable to retrieve seller information");
+			console.log('Was unable to retrieve seller information');
 			}
 		);
 	}

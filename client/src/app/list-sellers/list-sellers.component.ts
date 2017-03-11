@@ -13,28 +13,36 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class ListSellersComponent implements OnInit {
-	
-	private sellers: Seller[];
+
+	sellers: Seller[];
+	private finishedLoading = false;
+	noSellers = true;
 
 	constructor(private router: Router,
 				private service: SellersService,
 				private modalService: NgbModal) {}
 
 	ngOnInit() {
-		this.service.getSellers().subscribe( result => {
-			this.sellers = result;
-		}, err => {
-			console.log('I was not able to get Sellers')
-		});
+		this.getSellers();
 	}
 
 	GoToSellertDtl(id) {
-		if(id && id != 0){
-			this.router.navigateByUrl('/sellers/details/' + id);
-		}
-		else {
-			console.log("ID was not valid, should show an error");
+		if (id && id !== 0) {
+			this.router.navigate([`/sellers/details/${id}`]);
+		} else {
+			console.log('ID was not valid, should show an error');
 		}
 	}
 
+	getSellers() {
+		this.service.getSellers().subscribe( result => {
+			this.sellers = result;
+			this.finishedLoading = true;
+			if (this.sellers.length > 0) {
+				this.noSellers = false;
+			}
+		}, err => {
+			console.log('I was not able to get Sellers');
+		});
+	}
 }

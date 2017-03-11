@@ -7,28 +7,37 @@
 			<button type="button" class="btn btn-success"> Bæta við Söluaðila</button>
 		</div>
 	</div>
-	<div class="col-sm-12">
-		<table class="table table-hover">
-			<thead class="thead-inverse">
-				<tr>
-					<th> # </th>
-					<th> Seljandi </th>
-					<th> Flokkur </th>
-				</tr>
-			</thead>
-			<tbody class="table-striped">
-				<tr *ngFor="let s of sellers" (click)="GoToSellertDtl([s.id])">
-					<td>
-						<img class="img-fluid img-thumbnail rounded " src="{{s.imagePath}}" alt="Seller Profile" width="50" />
-					</td>
-					<td> 
-						{{s.name}}
-					</td>
-					<td> 
-						{{s.category}}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div *ngIf="finishedLoading">
+			<div class="col-sm-12" [hidden]="noSellers" id="list-sellers">
+				<table class="table table-hover">
+					<thead class="thead-inverse">
+						<tr>
+							<th> # </th>
+							<th> Seljandi </th>
+							<th> Flokkur </th>
+						</tr>
+					</thead>
+					<tbody class="table-striped">
+							<tr *ngFor="let s of sellers" (click)="GoToSellertDtl([s.id])">
+								<td>
+									<img class="img-fluid img-thumbnail rounded " src="{{s.imagePath}}" alt="Seller Profile" width="50" />
+								</td>
+								<td> 
+									{{s.name}}
+								</td>
+								<td> 
+									{{s.category}}
+								</td>
+							</tr>					
+					</tbody>
+				</table>
+			</div>
+		<div [hidden]="!noSellers" id="no-sellers">
+			<p>
+				<ngb-alert [dismissible]="false" type="info">
+					Engir söluaðilar til að birta!
+				</ngb-alert>
+			</p>
+		</div>
 	</div>
 </div>

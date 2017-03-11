@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { SellersService } from './sellers.service';
 import { ProductCardComponent } from './product-card/product-card.component';
 import { ListSellersComponent } from './list-sellers/list-sellers.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsDialogComponent } from './products-dialog/products-dialog.component';
 import { SellerDetailsComponent } from './seller-details/seller-details.component';
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
@@ -30,6 +30,7 @@ import { FooterComponent } from './footer/footer.component';
 		BrowserModule,
 		FormsModule,
 		HttpModule,
+		NgbAlertModule.forRoot(),
 		NgbModule.forRoot(),
 		RouterModule.forRoot([{
 			path: '',
