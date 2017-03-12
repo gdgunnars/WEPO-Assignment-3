@@ -3,6 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { SellersService} from '../sellers.service';
 import { Seller } from '../interfaces/seller';
 import { SellerProduct } from '../interfaces/sellerproduct';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component';
 
 @Component({
 	selector: 'app-seller-details',
@@ -19,7 +21,8 @@ export class SellerDetailsComponent implements OnInit {
 
 	constructor(private router: Router,
 				private service: SellersService,
-				private route: ActivatedRoute) { }
+				private route: ActivatedRoute,
+				private modalService: NgbModal) { }
 
 	ngOnInit() {
 		this.sellerId = +this.route.snapshot.params['id'];
@@ -70,4 +73,29 @@ export class SellerDetailsComponent implements OnInit {
 	onProductEdted(p: SellerProduct) {
 		console.log('ID :' + p.id +  'with name: ' + p.name);
 	}
+
+	editSeller() {
+		const modalInstance = this.modalService.open(SellerDialogComponent);
+		modalInstance.componentInstance.seller = Object.assign({}, this.seller);;
+		modalInstance.result.then(obj => {
+			if(!this.sellerEquals(obj)){
+				this.service.editSeller(obj).subscribe( result => {
+					// The seller was updated successfully
+					this.seller = result;
+				}, err => {
+					console.log('The service returned an error, something went wrong in the http.put');
+					console.log(err);
+				});
+			}
+		}).catch( err => {
+			// Someone closed the modal window using cancel or by clicking outside of it
+		});
+	}
+
+	sellerEquals(obj: Seller) {
+		return (this.seller.name === obj.name &&
+			this.seller.category === obj.category &&
+			this.seller.imagePath === obj.imagePath);
+	}
+
 }

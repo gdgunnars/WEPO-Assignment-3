@@ -16,13 +16,7 @@ export class SellerDialogComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.seller === undefined) {
-			console.log('No seller sent, initializing an empty seller');
-			this.seller = {
-				id: 0,
-				name: '',
-				category: '',
-				imagePath: ''
-			};
+			this.initalizeEmptySeller();
 		}
 	}
 
@@ -36,5 +30,15 @@ export class SellerDialogComponent implements OnInit {
 
 	validateLink(link: string) {
 
+	}
+
+	initalizeEmptySeller() {
+		console.log('No seller sent, initializing an empty seller');
+		this.seller = {
+			id: 0,
+			name: '',
+			category: '',
+			imagePath: ''
+		};
 	}
 }
