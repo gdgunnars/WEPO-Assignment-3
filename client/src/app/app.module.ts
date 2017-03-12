@@ -14,6 +14,7 @@ import { SellerDetailsComponent } from './seller-details/seller-details.componen
 import { SellerDialogComponent } from './seller-dialog/seller-dialog.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { FooterComponent } from './footer/footer.component';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
 	declarations: [
@@ -30,6 +31,7 @@ import { FooterComponent } from './footer/footer.component';
 		BrowserModule,
 		FormsModule,
 		HttpModule,
+		ToastrModule.forRoot(),
 		NgbAlertModule.forRoot(),
 		NgbModule.forRoot(),
 		RouterModule.forRoot([{
