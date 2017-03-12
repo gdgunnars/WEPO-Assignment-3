@@ -9,6 +9,7 @@ import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Rx';
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { ToastrService } from 'ngx-toastr';
 
 export class ActivatedRouteStub {
 	// ActivatedRoute.params is Observable
@@ -88,7 +89,7 @@ describe('SellerDetailsComponent', () => {
 					if (mockService.successGetSeller === true) {
 						fnSuccess(mockService.seller);
 					} else {
-						fnError();
+						fnError({statusText: 'Error 404: ID not found.'});
 					}
 				}
 			};
@@ -110,11 +111,17 @@ describe('SellerDetailsComponent', () => {
 					if (mockService.successEditSeller === true) {
 						fnSuccess(mockService.seller);
 					} else {
-						fnError();
+						fnError({statusText: 'Error 404:'});
 					}
 				}
-			}
+			};
 		}
+	};
+
+	const mockToastrService = {
+		error: jasmine.createSpy('error'),
+		success: jasmine.createSpy('success'),
+		warning: jasmine.createSpy('warning')
 	};
 
 	beforeEach(async(() => {
@@ -129,6 +136,9 @@ describe('SellerDetailsComponent', () => {
 			}, {
 				provide: ActivatedRoute,
 				useValue: activatedRoute
+			}, {
+				provide: ToastrService,
+				useValue: mockToastrService
 			}],
 			schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 		})
@@ -173,7 +183,7 @@ describe('SellerDetailsComponent', () => {
 
 			// Act:
 			component.getSellerById(1);
-			// TODO: add test for toastr
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 
@@ -203,7 +213,7 @@ describe('SellerDetailsComponent', () => {
 
 			// Act:
 			component.getSellerProducts(1);
-			// TODO: add test for toastr
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 
@@ -228,6 +238,7 @@ describe('SellerDetailsComponent', () => {
 			// Act:
 			component.editSeller();
 			expect(component.seller).toBe(mockService.seller);
+			expect(mockToastrService.success).toHaveBeenCalled();
 		});
 	});
 
@@ -272,7 +283,7 @@ describe('SellerDetailsComponent', () => {
 
 			// Act:
 			component.editSeller();
-			// TODO: add test for toastr
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 
@@ -297,12 +308,12 @@ describe('SellerDetailsComponent', () => {
 				quantitySold: 400
 			}, {
 				quantitySold: 100
-			}]
+			}];
 			component.top10 = [];
 
 
 			// Act:
-			component.top10Bought(products)
+			component.top10Bought(products);
 			expect(component.top10).toEqual(sortedProducts);
 		});
 	});
@@ -336,12 +347,12 @@ describe('SellerDetailsComponent', () => {
 			}, {
 				quantitySold: 100,
 				price: 1
-			}]
+			}];
 			component.top10Spent = [];
 
 
 			// Act:
-			component.top10SpentOn(products)
+			component.top10SpentOn(products);
 			expect(component.top10Spent).toEqual(sortedProducts);
 		});
 	});

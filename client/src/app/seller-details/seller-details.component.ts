@@ -5,6 +5,8 @@ import { Seller } from '../interfaces/seller';
 import { SellerProduct } from '../interfaces/sellerproduct';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component';
+import { ProductsDialogComponent } from '../products-dialog/products-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-seller-details',
@@ -21,21 +23,20 @@ export class SellerDetailsComponent implements OnInit {
 
 	constructor(private service: SellersService,
 				private route: ActivatedRoute,
-				private modalService: NgbModal) { }
+				private modalService: NgbModal,
+				private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.sellerId = +this.route.snapshot.params['id'];
 		this.getSellerById(this.sellerId);
 		this.getSellerProducts(this.sellerId);
 	}
-	
 
 	getSellerById(id: number) {
 		this.service.getSellerById(id).subscribe( result => {
 			this.seller = result;
 		}, err => {
-			// Was unable to retrieve seller information
-			// TODO: add toastr
+			this.toastrService.error(err.statusText, 'Ekki náðist að sækja notanda');
 			}
 		);
 	}
@@ -47,7 +48,7 @@ export class SellerDetailsComponent implements OnInit {
 			this.top10SpentOn(this.products.slice());
 		}, err => {
 			// Was not able to get Products for seller id
-			// TODO: add toastr
+			// Show message in html
 		});
 	}
 
@@ -89,9 +90,10 @@ export class SellerDetailsComponent implements OnInit {
 				this.service.editSeller(obj).subscribe( result => {
 					// The seller was updated successfully
 					this.seller = result;
+					const msg = 'Seljandi ' + result.name + ' var uppfærður';
+					this.toastrService.success('', msg);
 				}, err => {
-					// The service returned an error, something went wrong in the http.put
-					// TODO: add toastr
+					this.toastrService.error(err.statusText, 'Villa, ekki tókst að uppfæra');
 				});
 			}
 		});
@@ -101,6 +103,20 @@ export class SellerDetailsComponent implements OnInit {
 		return (this.seller.name === obj.name &&
 			this.seller.category === obj.category &&
 			this.seller.imagePath === obj.imagePath);
+	}
+
+	addProduct() {
+		const modalInstance = this.modalService.open(ProductsDialogComponent);
+		modalInstance.result.then(obj => {
+			this.service.addProduct(this.sellerId, obj).subscribe( result => {
+				this.products.push(result['product']);
+				this.top10Bought(this.products.slice());
+				this.top10SpentOn(this.products.slice());
+				this.toastrService.success(result.name, 'Vöru bætt við');
+			}, err => {
+				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+			});
+		});
 	}
 
 }

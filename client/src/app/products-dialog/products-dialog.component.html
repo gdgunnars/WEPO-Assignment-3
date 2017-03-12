@@ -7,22 +7,28 @@
 <div class="modal-body">
 	<form (submit)="onOk()">
 		<div class="form-group">
-			<label [attr.for]="seller.name"> Nafn seljanda</label>
-			<input [(ngModel)]="seller.name" type="text" name="seller_name" 
-				placeholder="Enter name" class="form-control" autofocus required
-				oninvalid="this.setCustomValidity('Ekki gleyma nafninu')" />
+			<label [attr.for]="product.name"> Nafn vöru</label>
+			<input [(ngModel)]="product.name" type="text" name="product_name" 
+				placeholder="t.d. Trefill" class="form-control" autofocus required />
 		</div>
 		<div class="form-group">
-			<label [attr.for]="seller.category"> Flokkur</label>
-			<input [(ngModel)]="seller.category" type="text" name="category" 
-				placeholder="Enter category" class="form-control" required />
-			<small id="emailHelp" class="form-text text-muted">Vinsamlegast vandaðu innslátt.</small>
+			<label [attr.for]="product.price"> Verð í kr</label>
+			<input [(ngModel)]="product.price" type="text" name="product_name" 
+				placeholder="t.d. 1200" class="form-control" autofocus required
+				pattern="[0-9]*" />
 		</div>
 		<div class="form-group">
-			<label [attr.for]="seller.imagePath"> Mynd </label>
-			<input [(ngModel)]="seller.imagePath" type="url" name="seller_image" 
-				placeholder="Put your image path here" class="form-control" />
+			<label [attr.for]="product.quantityInStock"> Magn á lager</label>
+			<input [(ngModel)]="product.quantityInStock" type="text" name="product_name" 
+				placeholder="t.d. 80" class="form-control" autofocus required
+				pattern="[0-9]*" />
 		</div>
+		<div class="form-group">
+			<label [attr.for]="product.imagePath"> Hlekkur á mynd</label>
+			<input [(ngModel)]="product.imagePath" type="URL" name="product_name" 
+				placeholder="http://imgur.com/" class="form-control" autofocus />
+		</div>
+
 		<button type="button" class="btn btn-secondary" (click)="onCancel()"> Hætta </button>
 		<input type="submit" class="btn btn-success" value="Ok" />
 	</form>		
