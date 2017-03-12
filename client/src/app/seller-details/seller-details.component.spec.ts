@@ -394,6 +394,29 @@ describe('SellerDetailsComponent', () => {
 			// Act:
 			component.addProduct();
 			expect(component.products[0]).toBe(mockService.product);
+			expect(mockToastrService.success).toHaveBeenCalled();
+		});
+	});
+
+	describe('when adding a new product failes', () => {
+		it('should not add new product to the list of products', () => {
+			// Arrange:
+			mockService.product = {
+				id: 2,
+				name: 'Trefló',
+				price: 1200,
+				quantityInStock: 20,
+				quantitySold: 0,
+				imagePath: 'http://www.pattobatto.is'
+			};
+			component.products = [];
+			mockModal.pressedOk = true;
+			mockService.successAddProduct = false;
+
+			// Act:
+			component.addProduct();
+			expect(component.products[0]).not.toBe(mockService.product);
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 });
