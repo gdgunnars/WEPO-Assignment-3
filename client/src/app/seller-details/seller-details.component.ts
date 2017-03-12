@@ -47,7 +47,8 @@ export class SellerDetailsComponent implements OnInit {
 			this.top10Bought(this.products.slice());
 			this.top10SpentOn(this.products.slice());
 		}, err => {
-			console.log('Was not able to get Products for seller id: ' + this.sellerId);
+			// Was not able to get Products for seller id
+			// Show message in html
 		});
 	}
 
