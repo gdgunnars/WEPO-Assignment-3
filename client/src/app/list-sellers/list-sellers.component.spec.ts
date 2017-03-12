@@ -1,7 +1,7 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
 
 import { ListSellersComponent } from './list-sellers.component';
 import {NgbModal, NgbAlert, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
@@ -101,9 +101,7 @@ describe('ListSellersComponent', () => {
 				provide: ToastrService,
 				useValue: mockToastrService
 			}],
-			imports: [
-				NgbAlertModule.forRoot()
-			]
+			schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 		})
 		.compileComponents();
 	}));

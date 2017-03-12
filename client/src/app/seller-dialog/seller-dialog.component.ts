@@ -15,9 +15,7 @@ export class SellerDialogComponent implements OnInit {
 	constructor(public activeModal: NgbActiveModal) {}
 
 	ngOnInit() {
-		if (this.seller === undefined) {
-			this.initalizeEmptySeller();
-		}
+		this.initalizeEmptySeller();
 	}
 
 	onCancel() {
@@ -28,17 +26,15 @@ export class SellerDialogComponent implements OnInit {
 		this.activeModal.close(this.seller);
 	}
 
-	validateLink(link: string) {
-
-	}
-
 	initalizeEmptySeller() {
-		console.log('No seller sent, initializing an empty seller');
-		this.seller = {
-			id: 0,
-			name: '',
-			category: '',
-			imagePath: ''
-		};
+		if (this.seller === undefined) {
+			// No seller sent, initializing an empty seller
+			this.seller = {
+				id: 0,
+				name: '',
+				category: '',
+				imagePath: ''
+			};
+		}
 	}
 }

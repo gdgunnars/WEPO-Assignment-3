@@ -28,12 +28,14 @@ export class SellerDetailsComponent implements OnInit {
 		this.getSellerById(this.sellerId);
 		this.getSellerProducts(this.sellerId);
 	}
+	
 
 	getSellerById(id: number) {
 		this.service.getSellerById(id).subscribe( result => {
 			this.seller = result;
 		}, err => {
-			console.log('Was unable to retrieve seller information');
+			// Was unable to retrieve seller information
+			// TODO: add toastr
 			}
 		);
 	}
@@ -44,7 +46,8 @@ export class SellerDetailsComponent implements OnInit {
 			this.top10Bought(this.products.slice());
 			this.top10SpentOn(this.products.slice());
 		}, err => {
-			console.log('Was not able to get Products for seller id: ' + this.sellerId);
+			// Was not able to get Products for seller id
+			// TODO: add toastr
 		});
 	}
 
@@ -87,13 +90,11 @@ export class SellerDetailsComponent implements OnInit {
 					// The seller was updated successfully
 					this.seller = result;
 				}, err => {
-					console.log('The service returned an error, something went wrong in the http.put');
-					console.log(err);
+					// The service returned an error, something went wrong in the http.put
+					// TODO: add toastr
 				});
 			}
-		}); /*.catch( err => {
-			// Someone closed the modal window using cancel or by clicking outside of it
-		});*/
+		});
 	}
 
 	sellerEquals(obj: Seller) {

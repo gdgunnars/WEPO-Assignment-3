@@ -51,19 +51,14 @@ export class ListSellersComponent implements OnInit {
 
 	addSeller() {
 		const modalInstance = this.modalService.open(SellerDialogComponent);
-		console.log('Modal instance: ' + modalInstance);
 		modalInstance.result.then(obj => {
 			this.service.addSeller(obj).subscribe( result => {
-				console.log('The seller was added successfully');
+				// The seller was added successfully
 				this.sellers.push(result);
 				this.toastrService.success('Seljandinn var skráður', 'Æði');
 			}, err => {
 				this.toastrService.error('Seljandanum var ekki bætt við', 'Villa kom upp');
 			});
-			console.log(obj);
-		}); /*.catch( err => {
-			console.log('Seller modal was closed');
-			console.log(err);
-		});*/
+		});
 	}
 }
