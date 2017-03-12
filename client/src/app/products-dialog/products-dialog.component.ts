@@ -10,13 +10,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 export class ProductsDialogComponent implements OnInit {
 
 	product: SellerProduct;
+	editing = false;
 
 	constructor(public activeModal: NgbActiveModal) { }
 
 	ngOnInit() {
-		if (this.product === undefined) {
-			this.initalizeEmptyProduct();
-		}
+		this.initalizeEmptyProduct();
 	}
 
 	onCancel() {
@@ -28,14 +27,16 @@ export class ProductsDialogComponent implements OnInit {
 	}
 
 	initalizeEmptyProduct() {
-		this.product = {
-			id: 0,
-			name: '',
-			price: 0,
-			quantitySold: 0,
-			quantityInStock: 0,
-			imagePath: ''
-		};
+		if (this.product === undefined) {
+			this.product = {
+				id: 0,
+				name: '',
+				price: 0,
+				quantitySold: 0,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+		}
 	}
 
 }

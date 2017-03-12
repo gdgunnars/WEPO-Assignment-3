@@ -5,13 +5,12 @@ import { DebugElement } from '@angular/core';
 
 import { NgModule } from '@angular/core';
 import { SellerDialogComponent } from './seller-dialog.component';
-import {NgbActiveModal, NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormsModule} from '@angular/forms';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
 
 describe('SellerDialogComponent', () => {
 	let component: SellerDialogComponent;
 	let fixture: ComponentFixture<SellerDialogComponent>;
-	let modalService: NgbModal;
 
 	const mockModal = {
 		dismiss: jasmine.createSpy('dismiss'),

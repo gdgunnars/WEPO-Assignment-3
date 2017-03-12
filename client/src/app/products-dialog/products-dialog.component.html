@@ -17,7 +17,7 @@
 				placeholder="t.d. 1200" class="form-control" autofocus required
 				pattern="[0-9]*" />
 		</div>
-		<div class="form-group">
+		<div class="form-group" [hidden]="editing">
 			<label [attr.for]="product.quantityInStock"> Magn á lager</label>
 			<input [(ngModel)]="product.quantityInStock" type="text" name="product_name" 
 				placeholder="t.d. 80" class="form-control" autofocus required
