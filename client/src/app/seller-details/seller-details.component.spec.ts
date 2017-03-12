@@ -7,7 +7,6 @@ import {SellerDetailsComponent} from './seller-details.component';
 import {SellersService} from '../sellers.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Observable} from 'rxjs/Rx';
-// import {ActivatedRouteStub} from '../router-stubs';
 import {ActivatedRoute} from '@angular/router';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
@@ -52,6 +51,14 @@ describe('SellerDetailsComponent', () => {
 							fnCancel('error');
 						}
 					}
+				},
+				componentInstance: {
+					seller: {
+						id: 2,
+						name: 'Pattó',
+						category: 'Batterý',
+						imagePath: 'http://www.pattobatto.is'
+					}
 				}
 			};
 		}
@@ -60,6 +67,7 @@ describe('SellerDetailsComponent', () => {
 	const mockService = {
 		successGetProducts: true,
 		successGetSeller: true,
+		successEditSeller: true,
 		products: [{
 			id: 1,
 			name: 'Hanski',
@@ -95,6 +103,17 @@ describe('SellerDetailsComponent', () => {
 					}
 				}
 			};
+		},
+		editSeller: function(obj) {
+			return {
+				subscribe: function(fnSuccess, fnError) {
+					if (mockService.successEditSeller === true) {
+						fnSuccess(mockService.seller);
+					} else {
+						fnError();
+					}
+				}
+			}
 		}
 	};
 
@@ -124,6 +143,7 @@ describe('SellerDetailsComponent', () => {
 		};
 		fixture.detectChanges();
 	});
+
 
 	it('should create', () => {
 		expect(component).toBeTruthy();
@@ -184,6 +204,145 @@ describe('SellerDetailsComponent', () => {
 			// Act:
 			component.getSellerProducts(1);
 			// TODO: add test for toastr
+		});
+	});
+
+	describe('when editing seller successfully', () => {
+		it('should set seller equal to the edited seller', () => {
+			// Arrange:
+			component.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Timbur',
+				imagePath: ''
+			};
+			mockService.seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockService.successEditSeller = true;
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.editSeller();
+			expect(component.seller).toBe(mockService.seller);
+		});
+	});
+
+	describe('when editing seller fails', () => {
+		it('should not change seller if nothing has changed', () => {
+			// Arrange:
+			component.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Timbur',
+				imagePath: ''
+			};
+			mockModal.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Timbur',
+				imagePath: ''
+			};
+			mockService.successEditSeller = true;
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.editSeller();
+			expect(component.seller).toBe(component.seller);
+		});
+
+		it('should  display an error message if service failed', () => {
+			// Arrange:
+			component.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Timbur',
+				imagePath: ''
+			};
+			mockModal.seller = {
+				id: 2,
+				name: 'Tommi',
+				category: 'Viður',
+				imagePath: ''
+			};
+			mockService.successEditSeller = false;
+
+			// Act:
+			component.editSeller();
+			// TODO: add test for toastr
+		});
+	});
+
+	describe('when sorting top 10 bought products', () => {
+		it('should sort list', () => {
+			// Arrange:
+			const products = [{
+				quantitySold: 500
+			}, {
+				quantitySold: 100
+			}, {
+				quantitySold: 400
+			}, {
+				quantitySold: 400
+			}];
+
+			const sortedProducts = [{
+				quantitySold: 500
+			}, {
+				quantitySold: 400
+			}, {
+				quantitySold: 400
+			}, {
+				quantitySold: 100
+			}]
+			component.top10 = [];
+
+
+			// Act:
+			component.top10Bought(products)
+			expect(component.top10).toEqual(sortedProducts);
+		});
+	});
+
+	describe('when sorting top 10 spent on products', () => {
+		it('should sort list', () => {
+			// Arrange:
+			const products = [{
+				quantitySold: 500,
+				price: 1
+			}, {
+				quantitySold: 100,
+				price: 1
+			}, {
+				quantitySold: 400,
+				price: 1
+			}, {
+				quantitySold: 400,
+				price: 1
+			}];
+
+			const sortedProducts = [{
+				quantitySold: 500,
+				price: 1
+			}, {
+				quantitySold: 400,
+				price: 1
+			}, {
+				quantitySold: 400,
+				price: 1
+			}, {
+				quantitySold: 100,
+				price: 1
+			}]
+			component.top10Spent = [];
+
+
+			// Act:
+			component.top10SpentOn(products)
+			expect(component.top10Spent).toEqual(sortedProducts);
 		});
 	});
 });

@@ -91,9 +91,9 @@ export class SellerDetailsComponent implements OnInit {
 					console.log(err);
 				});
 			}
-		}).catch( err => {
+		}); /*.catch( err => {
 			// Someone closed the modal window using cancel or by clicking outside of it
-		});
+		});*/
 	}
 
 	sellerEquals(obj: Seller) {
