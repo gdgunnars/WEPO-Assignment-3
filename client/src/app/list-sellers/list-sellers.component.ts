@@ -16,7 +16,7 @@ import { ToastrService } from 'ngx-toastr';
 export class ListSellersComponent implements OnInit {
 
 	sellers: Seller[];
-	private finishedLoading = false;
+	finishedLoading = false;
 	noSellers = true;
 
 	constructor(private router: Router,
@@ -44,7 +44,8 @@ export class ListSellersComponent implements OnInit {
 				this.noSellers = false;
 			}
 		}, err => {
-			console.log('I was not able to get Sellers');
+			this.finishedLoading = true;
+			this.toastrService.warning('Ekki tókst að sækja seljendur', 'VILLA');
 		});
 	}
 
