@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class ListSellersComponent implements OnInit {
 
 	sellers: Seller[];
-	private finishedLoading = false;
+	finishedLoading = false;
 	noSellers = true;
 
 	constructor(private router: Router,
@@ -42,24 +42,26 @@ export class ListSellersComponent implements OnInit {
 				this.noSellers = false;
 			}
 		}, err => {
+			// TODO: add toastr
 			console.log('I was not able to get Sellers');
 		});
 	}
 
 	addSeller() {
 		const modalInstance = this.modalService.open(SellerDialogComponent);
-		// modalInstance.componentInstance.sellerName =
+		console.log('Modal instance: ' + modalInstance);
 		modalInstance.result.then(obj => {
 			this.service.addSeller(obj).subscribe( result => {
 				console.log('The seller was added successfully');
 				this.sellers.push(result);
 			}, err => {
+				// TODO: add toastr
 				console.log('there was some error while adding the seller');
 			});
 			console.log(obj);
-		}).catch( err => {
+		})/*.catch( err => {
 			console.log('Seller modal was closed');
 			console.log(err);
-		});
+		});*/
 	}
 }

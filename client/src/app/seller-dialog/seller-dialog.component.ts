@@ -16,13 +16,13 @@ export class SellerDialogComponent implements OnInit {
 
 	ngOnInit() {
 		if (this.seller === undefined) {
-			console.log("No seller sent, initializing an empty seller");
+			console.log('No seller sent, initializing an empty seller');
 			this.seller = {
 				id: 0,
-				name: "",
-				category: "",
-				imagePath: ""
-			}
+				name: '',
+				category: '',
+				imagePath: ''
+			};
 		}
 	}
 
@@ -34,7 +34,7 @@ export class SellerDialogComponent implements OnInit {
 		this.activeModal.close(this.seller);
 	}
 
-	validateLink(link: string){
+	validateLink(link: string) {
 
 	}
 }

@@ -11,11 +11,28 @@ import { SellersService } from '../sellers.service';
 describe('ListSellersComponent', () => {
 	let component: ListSellersComponent;
 	let fixture: ComponentFixture<ListSellersComponent>;
-	let de:      DebugElement;
-	let el:      HTMLElement;
 
-	const mockModal = {
-		open: jasmine.createSpy('open')
+	const  mockModal = {
+		pressedOk: true,
+		seller: {
+			id: 2,
+			name: 'Pattó',
+			category: 'Batterý',
+			imagePath: 'http://www.pattobatto.is'
+		},
+		open: function() {
+			return {
+				result: {
+					then: function(fnOk, fnCancel) {
+						if (mockModal.pressedOk === true) {
+							fnOk(mockModal.seller);
+						} else {
+							fnCancel('error');
+						}
+					}
+				}
+			};
+		}
 	};
 
 	const mockRouter = {
@@ -24,17 +41,35 @@ describe('ListSellersComponent', () => {
 
 	const mockService = {
 		successGetSellers: true,
+		successAddSeller: true,
 		sellers: [{
 			id: 1,
 			name: 'Dabs',
-			category: 'Treflar',
+			category: 'Rauðrófusafar',
 			imagePath: 'http://example.com'
 		}],
+		seller: {
+			id: 2,
+			name: 'Pattó',
+			category: 'Batterý',
+			imagePath: 'http://www.pattobatto.is'
+		},
 		getSellers: function() {
 			return {
 				subscribe: function(fnSuccess, fnError) {
 					if (mockService.successGetSellers === true) {
 						fnSuccess(mockService.sellers);
+					} else {
+						fnError();
+					}
+				}
+			};
+		},
+		addSeller: function() {
+			return {
+				subscribe: function(fnSuccess, fnError) {
+					if (mockService.successAddSeller === true) {
+						fnSuccess(mockService.seller);
 					} else {
 						fnError();
 					}
@@ -67,9 +102,6 @@ describe('ListSellersComponent', () => {
 		fixture = TestBed.createComponent(ListSellersComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
-
-		de = fixture.debugElement.query(By.css('#list-sellers'));
-		el = de.nativeElement;
 	});
 
 	it('should create', () => {
@@ -89,7 +121,6 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.getSellers();
-			fixture.detectChanges();
 			expect(component.noSellers).toBe(false);
 		});
 	});
@@ -103,7 +134,6 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.getSellers();
-			fixture.detectChanges();
 			expect(component.noSellers).toBe(true);
 		});
 	});
@@ -130,13 +160,41 @@ describe('ListSellersComponent', () => {
 
 	describe('when SellerService fails to get list of sellers', () => {
 		it('should display an error message', () => {
-			// TODO: fix this test to test if error message is displayed
 			// Arrange:
 			mockService.successGetSellers = false;
 
 			// Act:
 			component.getSellers();
-			// expect?
-		})
+			// TODO: add test for toastr when toastr has been added
+		});
+	});
+
+	describe('when adding a new seller successfully', () => {
+		it('should add the new seller to the list of sellers', () => {
+			// Arrange:
+			mockService.seller = {
+				id: 2,
+				name: 'Pattó',
+				category: 'Batterý',
+				imagePath: 'http://www.pattobatto.is'
+			};
+			component.sellers = [];
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.addSeller();
+			expect(component.sellers[0]).toEqual(mockService.seller);
+		});
+	});
+
+	describe('when adding a new seller fails', () => {
+		it('should display an error message', () => {
+			// Arrange:
+			mockService.successAddSeller = false;
+
+			// Act:
+			component.addSeller();
+			// TODO: add test for toastr when toastr has been added
+		});
 	});
 });
