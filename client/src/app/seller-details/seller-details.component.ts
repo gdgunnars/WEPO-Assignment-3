@@ -78,10 +78,6 @@ export class SellerDetailsComponent implements OnInit {
 		this.top10Spent = this.top10Spent.slice(0, 10);
 	}
 
-	onProductEdted(p: SellerProduct) {
-		console.log('ID :' + p.id +  'with name: ' + p.name);
-	}
-
 	editSeller() {
 		const modalInstance = this.modalService.open(SellerDialogComponent);
 		modalInstance.componentInstance.seller = Object.assign({}, this.seller);
@@ -115,6 +111,19 @@ export class SellerDetailsComponent implements OnInit {
 				this.toastrService.success(result.name, 'Vöru bætt við');
 			}, err => {
 				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+			});
+		});
+	}
+
+	onProductEdit(product: SellerProduct) {
+		const modalInstance = this.modalService.open(ProductsDialogComponent);
+		modalInstance.componentInstance.product = Object.assign({}, product);
+		modalInstance.componentInstance.editing = true;
+		modalInstance.result.then(obj => {
+			this.service.editProduct(this.sellerId, obj).subscribe( result => {
+				product = obj;
+				console.log(product);
+				this.toastrService.success(product.name, 'Vöru var breytt');
 			});
 		});
 	}
