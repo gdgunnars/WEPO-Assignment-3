@@ -5,6 +5,7 @@ import { SellerProduct } from '../interfaces/sellerproduct';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-list-sellers',
@@ -20,7 +21,8 @@ export class ListSellersComponent implements OnInit {
 
 	constructor(private router: Router,
 				private service: SellersService,
-				private modalService: NgbModal) {}
+				private modalService: NgbModal,
+				private toastrService: ToastrService) {}
 
 	ngOnInit() {
 		this.getSellers();
@@ -53,6 +55,7 @@ export class ListSellersComponent implements OnInit {
 			this.service.addSeller(obj).subscribe( result => {
 				console.log('The seller was added successfully');
 				this.sellers.push(result);
+				this.toastrService.success('Seller has been added', 'Awesome');
 			}, err => {
 				console.log('there was some error while adding the seller');
 			});
