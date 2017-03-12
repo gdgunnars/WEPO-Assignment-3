@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SellersService} from '../sellers.service';
 import { Seller } from '../interfaces/seller';
 import { SellerProduct } from '../interfaces/sellerproduct';
@@ -21,30 +21,34 @@ export class SellerDetailsComponent implements OnInit {
 	top10: SellerProduct[];
 	top10Spent: SellerProduct[];
 
-	constructor(private router: Router,
-				private service: SellersService,
+	constructor(private service: SellersService,
 				private route: ActivatedRoute,
 				private modalService: NgbModal,
 				private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.sellerId = +this.route.snapshot.params['id'];
-		this.service.getSellerById(this.sellerId).subscribe( result => {
+		this.getSellerById(this.sellerId);
+		this.getSellerProducts(this.sellerId);
+	}
+
+	getSellerById(id: number) {
+		this.service.getSellerById(id).subscribe( result => {
 			this.seller = result;
 		}, err => {
 			console.log('Was unable to retrieve seller information');
 			}
 		);
+	}
 
-		this.service.getSellerProducts(this.sellerId).subscribe( result => {
+	getSellerProducts(id: number) {
+		this.service.getSellerProducts(id).subscribe( result => {
 			this.products = result;
 			this.top10Bought(this.products.slice());
 			this.top10SpentOn(this.products.slice());
-
 		}, err => {
 			console.log('Was not able to get Products for seller id: ' + this.sellerId);
 		});
-
 	}
 
 	top10Bought(products) {
@@ -90,9 +94,9 @@ export class SellerDetailsComponent implements OnInit {
 					console.log(err);
 				});
 			}
-		}).catch( err => {
+		}); /*.catch( err => {
 			// Someone closed the modal window using cancel or by clicking outside of it
-		});
+		});*/
 	}
 
 	sellerEquals(obj: Seller) {

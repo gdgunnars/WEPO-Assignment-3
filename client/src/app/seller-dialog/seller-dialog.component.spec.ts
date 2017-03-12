@@ -41,8 +41,6 @@ describe('SellerDialogComponent', () => {
 	});
 
 	describe('when seller-dialogs seller is undefined upon ngOninit', () => {
-		
-
 		it('should create an empty seller with default values', () => {
 			component.seller = undefined;
 			component.initalizeEmptySeller();
