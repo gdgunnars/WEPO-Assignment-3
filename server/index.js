@@ -123,7 +123,7 @@ app.post("/api/sellers", (req, res) => {
 
 app.put("/api/sellers/:id", (req, res) => {
 	// Check if we can find the seller:
-	var seller = findSellerById(req.params.id);
+	var seller = findSellerById(parseInt(req.params.id));
 	if (!seller) {
 		res.statusCode = 404;
 		return res.send('Error 404: No seller found!');
