@@ -36,7 +36,7 @@ export class SellerDetailsComponent implements OnInit {
 		this.service.getSellerById(id).subscribe( result => {
 			this.seller = result;
 		}, err => {
-			console.log('Was unable to retrieve seller information');
+			this.toastrService.error(err.statusText, 'Ekki náðist að sækja notanda');
 			}
 		);
 	}
@@ -89,14 +89,13 @@ export class SellerDetailsComponent implements OnInit {
 				this.service.editSeller(obj).subscribe( result => {
 					// The seller was updated successfully
 					this.seller = result;
+					const msg = 'Seljandi ' + result.name + ' var uppfærður';
+					this.toastrService.success('', msg);
 				}, err => {
-					console.log('The service returned an error, something went wrong in the http.put');
-					console.log(err);
+					this.toastrService.error(err.statusText, 'Villa, ekki tókst að uppfæra');
 				});
 			}
-		}); /*.catch( err => {
-			// Someone closed the modal window using cancel or by clicking outside of it
-		});*/
+		});
 	}
 
 	sellerEquals(obj: Seller) {
@@ -108,14 +107,14 @@ export class SellerDetailsComponent implements OnInit {
 	addProduct() {
 		const modalInstance = this.modalService.open(ProductsDialogComponent);
 		modalInstance.result.then(obj => {
-				this.service.addProduct(this.sellerId, obj).subscribe( result => {
-					this.products.push(result);
-					this.top10Bought(this.products.slice());
-					this.top10SpentOn(this.products.slice());
-					this.toastrService.success(result.name, 'Vöru bætt við');
-				}, err => {
-					this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
-				});
+			this.service.addProduct(this.sellerId, obj).subscribe( result => {
+				this.products.push(result['product']);
+				this.top10Bought(this.products.slice());
+				this.top10SpentOn(this.products.slice());
+				this.toastrService.success(result.name, 'Vöru bætt við');
+			}, err => {
+				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+			});
 		});
 	}
 
