@@ -69,6 +69,15 @@ describe('SellerDetailsComponent', () => {
 		successGetProducts: true,
 		successGetSeller: true,
 		successEditSeller: true,
+		successAddProduct: true,
+		product: {
+			id: 1,
+			name: 'Hanski',
+			price: 1995,
+			quantitySold: 500,
+			quantityInStock: 100,
+			imagePath: 'http://www.example.com/image.jpg'
+		},
 		products: [{
 			id: 1,
 			name: 'Hanski',
@@ -112,6 +121,17 @@ describe('SellerDetailsComponent', () => {
 						fnSuccess(mockService.seller);
 					} else {
 						fnError({statusText: 'Error 404:'});
+					}
+				}
+			};
+		},
+		addProduct: function(obj) {
+			return {
+				subscribe: function(fnSuccess, fnError) {
+					if (mockService.successAddProduct === true) {
+						fnSuccess({product: mockService.product});
+					} else {
+						fnError({statusText: 'Error'});
 					}
 				}
 			};
@@ -354,6 +374,26 @@ describe('SellerDetailsComponent', () => {
 			// Act:
 			component.top10SpentOn(products);
 			expect(component.top10Spent).toEqual(sortedProducts);
+		});
+	});
+
+	describe('when adding a new product successfully', () => {
+		it('should add the new product to the list of products', () => {
+			// Arrange:
+			mockService.product = {
+				id: 2,
+				name: 'Trefló',
+				price: 1200,
+				quantityInStock: 20,
+				quantitySold: 0,
+				imagePath: 'http://www.pattobatto.is'
+			};
+			component.products = [];
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.addProduct();
+			expect(component.products[0]).toBe(mockService.product);
 		});
 	});
 });
