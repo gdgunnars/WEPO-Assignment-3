@@ -5,6 +5,8 @@ import { Seller } from '../interfaces/seller';
 import { SellerProduct } from '../interfaces/sellerproduct';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component';
+import { ProductsDialogComponent } from '../products-dialog/products-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-seller-details',
@@ -22,7 +24,8 @@ export class SellerDetailsComponent implements OnInit {
 	constructor(private router: Router,
 				private service: SellersService,
 				private route: ActivatedRoute,
-				private modalService: NgbModal) { }
+				private modalService: NgbModal,
+				private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.sellerId = +this.route.snapshot.params['id'];
@@ -96,6 +99,20 @@ export class SellerDetailsComponent implements OnInit {
 		return (this.seller.name === obj.name &&
 			this.seller.category === obj.category &&
 			this.seller.imagePath === obj.imagePath);
+	}
+
+	addProduct() {
+		const modalInstance = this.modalService.open(ProductsDialogComponent);
+		modalInstance.result.then(obj => {
+				this.service.addProduct(this.sellerId, obj).subscribe( result => {
+					this.products.push(result);
+					this.top10Bought(this.products.slice());
+					this.top10SpentOn(this.products.slice());
+					this.toastrService.success(result.name, 'Vöru bætt við');
+				}, err => {
+					this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+				});
+		});
 	}
 
 }
