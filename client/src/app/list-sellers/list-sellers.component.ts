@@ -32,7 +32,7 @@ export class ListSellersComponent implements OnInit {
 		if (id && id !== 0) {
 			this.router.navigate([`/sellers/details/${id}`]);
 		} else {
-			console.log('ID was not valid, should show an error');
+			this.toastrService.warning('Þessi seljandi er ekki til', 'Obbs');
 		}
 	}
 
@@ -56,13 +56,12 @@ export class ListSellersComponent implements OnInit {
 			this.service.addSeller(obj).subscribe( result => {
 				console.log('The seller was added successfully');
 				this.sellers.push(result);
-				this.toastrService.success('Seller has been added', 'Awesome');
+				this.toastrService.success('Seljandinn var skráður', 'Æði');
 			}, err => {
-				// TODO: add toastr
-				console.log('there was some error while adding the seller');
+				this.toastrService.error('Seljandanum var ekki bætt við', 'Villa kom upp');
 			});
 			console.log(obj);
-		})/*.catch( err => {
+		}); /*.catch( err => {
 			console.log('Seller modal was closed');
 			console.log(err);
 		});*/

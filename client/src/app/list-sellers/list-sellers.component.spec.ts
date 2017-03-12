@@ -7,6 +7,7 @@ import { ListSellersComponent } from './list-sellers.component';
 import {NgbModal, NgbAlert, NgbAlertModule} from '@ng-bootstrap/ng-bootstrap';
 import {Router} from '@angular/router';
 import { SellersService } from '../sellers.service';
+import { ToastrService } from 'ngx-toastr';
 
 describe('ListSellersComponent', () => {
 	let component: ListSellersComponent;
@@ -78,6 +79,12 @@ describe('ListSellersComponent', () => {
 		}
 	};
 
+	const mockToastrService = {
+		error: jasmine.createSpy('error'),
+		success: jasmine.createSpy('success'),
+		warning: jasmine.createSpy('warning')
+	};
+
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			declarations: [ListSellersComponent],
@@ -90,6 +97,9 @@ describe('ListSellersComponent', () => {
 			}, {
 				provide: SellersService,
 				useValue: mockService
+			}, {
+				provide: ToastrService,
+				useValue: mockToastrService
 			}],
 			imports: [
 				NgbAlertModule.forRoot()
@@ -155,6 +165,7 @@ describe('ListSellersComponent', () => {
 			// Act:
 			component.GoToSellertDtl(0);
 			expect(mockRouter.navigate).not.toHaveBeenCalled();
+			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});
 
@@ -165,7 +176,7 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.getSellers();
-			// TODO: add test for toastr when toastr has been added
+			expect(component.finishedLoading).toBe(true);
 		});
 	});
 
@@ -194,7 +205,7 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.addSeller();
-			// TODO: add test for toastr when toastr has been added
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 });
