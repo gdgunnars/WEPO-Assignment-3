@@ -39,7 +39,7 @@ export class SellerDetailsComponent implements OnInit {
 			this.top10SpentOn(this.products.slice());
 
 		}, err => {
-			console.log("Was not able to get Products for seller id: " + this.sellerId);
+			console.log('Was not able to get Products for seller id: ' + this.sellerId);
 		});
 
 	}
@@ -70,8 +70,8 @@ export class SellerDetailsComponent implements OnInit {
 		this.top10Spent = this.top10Spent.slice(0, 10);
 	}
 
-	onProductEdited(p: SellerProduct) {
-		console.log("ID :" + p.id +  "with name: " + p.name);
+	onProductEdted(p: SellerProduct) {
+		console.log('ID :' + p.id +  'with name: ' + p.name);
 	}
 
 	editSeller() {

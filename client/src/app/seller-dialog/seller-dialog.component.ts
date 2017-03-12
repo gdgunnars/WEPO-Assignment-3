@@ -28,7 +28,7 @@ export class SellerDialogComponent implements OnInit {
 		this.activeModal.close(this.seller);
 	}
 
-	validateLink(link: string){
+	validateLink(link: string) {
 
 	}
 
