@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import {NavBarComponent} from './nav-bar.component';
-import {Router} from "@angular/router";
+import { NavBarComponent } from './nav-bar.component';
+import { Router } from '@angular/router';
 import { RouterLinkStubDirective } from '../router-stubs';
-import {RouterOutletStubComponent} from '../router-stubs';
-import {DebugElement, NO_ERRORS_SCHEMA} from "@angular/core";
-import {By} from "@angular/platform-browser";
+import { RouterOutletStubComponent } from '../router-stubs';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 describe('NavBarComponent', () => {
 	let component: NavBarComponent;
@@ -19,12 +19,12 @@ describe('NavBarComponent', () => {
 
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
-			declarations: [ 
+			declarations: [
 				NavBarComponent,
-				RouterLinkStubDirective, 
-				RouterOutletStubComponent 
+				RouterLinkStubDirective,
+				RouterOutletStubComponent
 				],
-				schemas: [ NO_ERRORS_SCHEMA ], 
+				schemas: [ NO_ERRORS_SCHEMA ],
 			providers: [{
 				provide: Router,
 				useValue: mockRouter
@@ -41,5 +41,6 @@ describe('NavBarComponent', () => {
 
 	it('should create', () => {
 		expect(component).not.toBeNull();
+		expect(component).toBeTruthy();
 	});
 });
