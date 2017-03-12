@@ -1,3 +1,32 @@
-<p>
-  products-dialog works!
-</p>
+<div class="modal-header">
+	<h4 class="modal-title">Upplýsingar um vöru</h4>
+	<button type="button" class="close" aria-label="Close" (click)="onCancel()">
+		<span aria-hidden="true">&times;</span>
+	</button>
+</div>
+<div class="modal-body">
+	<form (submit)="onOk()">
+		<div class="form-group">
+			<label [attr.for]="seller.name"> Nafn seljanda</label>
+			<input [(ngModel)]="seller.name" type="text" name="seller_name" 
+				placeholder="Enter name" class="form-control" autofocus required
+				oninvalid="this.setCustomValidity('Ekki gleyma nafninu')" />
+		</div>
+		<div class="form-group">
+			<label [attr.for]="seller.category"> Flokkur</label>
+			<input [(ngModel)]="seller.category" type="text" name="category" 
+				placeholder="Enter category" class="form-control" required />
+			<small id="emailHelp" class="form-text text-muted">Vinsamlegast vandaðu innslátt.</small>
+		</div>
+		<div class="form-group">
+			<label [attr.for]="seller.imagePath"> Mynd </label>
+			<input [(ngModel)]="seller.imagePath" type="url" name="seller_image" 
+				placeholder="Put your image path here" class="form-control" />
+		</div>
+		<button type="button" class="btn btn-secondary" (click)="onCancel()"> Hætta </button>
+		<input type="submit" class="btn btn-success" value="Ok" />
+	</form>		
+</div>
+<div class="modal-footer">
+	
+</div>

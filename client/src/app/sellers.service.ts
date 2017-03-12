@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Observable } from 'rxjs/Observable'
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 
 import { Seller } from './interfaces/seller';
@@ -36,11 +36,11 @@ export class SellersService {
 	}
 
 	addSeller(seller: Seller): Observable<Seller> {
-		let body = {
+		const body = {
 			name: seller.name,
 			category: seller.category,
 			imagePath: seller.imagePath
-		}
+		};
 		return this.http.post('http://localhost:5000/api/sellers', body)
 			.map(response => {
 			return <Seller> response.json();

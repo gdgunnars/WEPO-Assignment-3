@@ -5,6 +5,7 @@ import { SellerProduct } from '../interfaces/sellerproduct';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SellerDialogComponent } from '../seller-dialog/seller-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-list-sellers',
@@ -20,7 +21,8 @@ export class ListSellersComponent implements OnInit {
 
 	constructor(private router: Router,
 				private service: SellersService,
-				private modalService: NgbModal) {}
+				private modalService: NgbModal,
+				private toastrService: ToastrService) {}
 
 	ngOnInit() {
 		this.getSellers();
@@ -30,7 +32,7 @@ export class ListSellersComponent implements OnInit {
 		if (id && id !== 0) {
 			this.router.navigate([`/sellers/details/${id}`]);
 		} else {
-			console.log('ID was not valid, should show an error');
+			this.toastrService.warning('Þessi seljandi er ekki til', 'Obbs');
 		}
 	}
 
@@ -42,8 +44,8 @@ export class ListSellersComponent implements OnInit {
 				this.noSellers = false;
 			}
 		}, err => {
-			// TODO: add toastr
-			console.log('I was not able to get Sellers');
+			this.finishedLoading = true;
+			this.toastrService.warning('Ekki tókst að sækja seljendur', 'VILLA');
 		});
 	}
 
@@ -54,12 +56,12 @@ export class ListSellersComponent implements OnInit {
 			this.service.addSeller(obj).subscribe( result => {
 				console.log('The seller was added successfully');
 				this.sellers.push(result);
+				this.toastrService.success('Seljandinn var skráður', 'Æði');
 			}, err => {
-				// TODO: add toastr
-				console.log('there was some error while adding the seller');
+				this.toastrService.error('Seljandanum var ekki bætt við', 'Villa kom upp');
 			});
 			console.log(obj);
-		})/*.catch( err => {
+		}); /*.catch( err => {
 			console.log('Seller modal was closed');
 			console.log(err);
 		});*/

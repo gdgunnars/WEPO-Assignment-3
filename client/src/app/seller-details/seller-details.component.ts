@@ -49,8 +49,8 @@ export class SellerDetailsComponent implements OnInit {
 	}
 
 	top10Bought(products) {
-		this.top10 = products.sort((n1, n2) => {
-			if(n1.quantitySold > n2.quantitySold) {
+		this.top10 = products.sort( (n1, n2) => {
+			if (n1.quantitySold > n2.quantitySold) {
 				return -1;
 			}
 			if ( n1.quantitySold < n2.quantitySold) {
@@ -63,7 +63,7 @@ export class SellerDetailsComponent implements OnInit {
 
 	top10SpentOn(products) {
 		this.top10Spent = products.sort((n1, n2) => {
-			if((n1.quantitySold * n1.price) > (n2.quantitySold * n2.price)) {
+			if ( (n1.quantitySold * n1.price) > (n2.quantitySold * n2.price)) {
 				return -1;
 			}
 			if ( (n1.quantitySold * n1.price)  < (n2.quantitySold * n2.price)) {
@@ -80,9 +80,9 @@ export class SellerDetailsComponent implements OnInit {
 
 	editSeller() {
 		const modalInstance = this.modalService.open(SellerDialogComponent);
-		modalInstance.componentInstance.seller = Object.assign({}, this.seller);;
+		modalInstance.componentInstance.seller = Object.assign({}, this.seller);
 		modalInstance.result.then(obj => {
-			if(!this.sellerEquals(obj)){
+			if (!this.sellerEquals(obj)) {
 				this.service.editSeller(obj).subscribe( result => {
 					// The seller was updated successfully
 					this.seller = result;
