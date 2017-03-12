@@ -35,13 +35,20 @@ export class SellersService {
 		});
 	}
 
-	addSeller(newSeller: Seller): Observable<Seller> {
+	addSeller(seller: Seller): Observable<Seller> {
 		let body = {
-			name: newSeller.name,
-			category: newSeller.category,
-			imagePath: newSeller.imagePath
+			name: seller.name,
+			category: seller.category,
+			imagePath: seller.imagePath
 		}
 		return this.http.post('http://localhost:5000/api/sellers', body)
+			.map(response => {
+			return <Seller> response.json();
+		});
+	}
+
+	editSeller(seller: Seller): Observable<Seller> {
+		return this.http.put(`http://localhost:5000/api/sellers/${seller.id}`, seller)
 			.map(response => {
 			return <Seller> response.json();
 		});
