@@ -12,7 +12,7 @@ export class SellerDialogComponent implements OnInit {
 
 	seller: Seller;
 
-	constructor(public activeModal : NgbActiveModal) {}
+	constructor(public activeModal: NgbActiveModal) {}
 
 	ngOnInit() {
 		if (this.seller === undefined) {
