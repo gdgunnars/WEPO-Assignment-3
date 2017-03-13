@@ -1,10 +1,11 @@
 /* tslint:disable:no-unused-variable */
 
 import { TestBed, async, inject } from '@angular/core/testing';
-import {SellersService} from './sellers.service';
-import {Http, BaseRequestOptions, ResponseOptions, Response, RequestMethod } from '@angular/http';
-import {MockBackend, MockConnection} from '@angular/http/testing';
-import {Seller} from './interfaces/seller';
+import { SellersService } from './sellers.service';
+import { Http, BaseRequestOptions, ResponseOptions, Response, RequestMethod } from '@angular/http';
+import { MockBackend, MockConnection } from '@angular/http/testing';
+import { Seller } from './interfaces/seller';
+import { SellerProduct } from './interfaces/sellerproduct';
 
 describe('SellersService', () => {
 	beforeEach(() => {
@@ -122,6 +123,135 @@ describe('SellersService', () => {
 				expect(response[0].id).toBe(1);
 				expect(response[1].id).toBe(2);
 				expect(response[0].name).toEqual('Leirtau');
+				done();
+			});
+		});
+
+		it('addSeller should return the seller matching the seller sent in as the function parameter', (done) => {
+			backend.connections.subscribe((connection: MockConnection) => {
+				const options = new ResponseOptions({
+					body: JSON.stringify(
+						{
+							id: 3,
+							name: 'Lodmundur',
+							category: 'Coffee',
+							imagePath: 'http://www.example.com'
+						})
+				});
+				connection.mockRespond(new Response(options));
+			});
+
+			subject.
+			addSeller(<Seller> 	{
+							id: 3,
+							name: 'Lodmundur',
+							category: 'Coffee',
+							imagePath: 'http://www.example.com'
+						})
+			.subscribe((response) => {
+				expect(response.id).toBe(3);
+				expect(response.name).toEqual('Lodmundur');
+				expect(response.category).toEqual('Coffee');
+				done();
+			});
+		});
+
+		it('addProduct should return the product matching the product sent in as the function parameter', (done) => {
+			backend.connections.subscribe((connection: MockConnection) => {
+				const options = new ResponseOptions({
+					body: JSON.stringify(
+						{
+							id: 1,
+							name: 'Leirtau',
+							price: 1000,
+							quantitySold: 500,
+							quantityInStock: 5000,
+							imagePath: 'http://www.example.com'
+						})
+				});
+				connection.mockRespond(new Response(options));
+			});
+
+			subject.
+			addProduct(1, <SellerProduct>{
+							id: 1,
+							name: 'Leirtau',
+							price: 1000,
+							quantitySold: 500,
+							quantityInStock: 5000,
+							imagePath: 'http://www.example.com'
+						})
+			.subscribe((response) => {
+				expect(response.id).toBe(1);
+				expect(response.name).toEqual('Leirtau');
+				expect(response.price).toBe(1000);
+				expect(response.quantitySold).toBe(500);
+				expect(response.quantityInStock).toBe(5000);
+				done();
+			});
+		});
+
+		it('editSeller should return the seller object matching the seller object sent in as the function parameter', (done) => {
+			backend.connections.subscribe((connection: MockConnection) => {
+				const options = new ResponseOptions({
+					body: JSON.stringify(
+					{
+						id: 3,
+						name: 'Gulli',
+						category: 'Hannyrdir',
+						imagePath: 'http://www.example.com'
+					})
+				});
+				connection.mockRespond(new Response(options));
+			});
+
+			subject.
+			editSeller(<Seller> {
+						id: 3,
+						name: 'Gulli',
+						category: 'Hannyrdir',
+						imagePath: 'http://www.example.com'
+					})
+			.subscribe((response) => {
+				expect(response.id).toBe(3);
+				expect(response.name).toEqual('Gulli');
+				expect(response.category).toEqual('Hannyrdir');
+				done();
+			});
+		});
+
+		it('editProduct should return the product object matching the product object sent in as the function parameter', (done) => {
+			backend.connections.subscribe((connection: MockConnection) => {
+				const options = new ResponseOptions({
+					body: JSON.stringify(
+					{
+						id: 3,
+						name: 'Pans',
+						price: 1000,
+						quantitySold: 5,
+						quantityInStock: 50,
+						imagePath: 'http://www.example.com'
+					})
+				});
+				connection.mockRespond(new Response(options));
+			});
+
+			subject.
+			editProduct(1, <SellerProduct>
+			{
+				id: 3,
+				name: 'Pans',
+				price: 1000,
+				quantitySold: 5,
+				quantityInStock: 50,
+				imagePath: 'http://www.example.com'
+			})
+			.subscribe((response) => {
+				expect(response.id).toBe(3);
+				expect(response.name).toEqual('Pans');
+				expect(response.price).toBe(1000);
+				expect(response.quantitySold).toBe(5);
+				expect(response.quantityInStock).toBe(50);
 				done();
 			});
 		});
