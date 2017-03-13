@@ -95,9 +95,9 @@ export class SellerDetailsComponent implements OnInit {
 					// The seller was updated successfully
 					this.seller = result;
 					const msg = 'Seljandi ' + result.name + ' var uppfærður';
-					this.toastrService.success('', msg);
+					this.toastrService.success(msg, 'Aðgerð tókst');
 				}, err => {
-					this.toastrService.error(err.statusText, 'Villa, ekki tókst að uppfæra');
+					this.toastrService.error(err.statusText, 'Ekki tókst að uppfæra söluaðila');
 				});
 			}
 		}).catch( err => {
@@ -120,7 +120,7 @@ export class SellerDetailsComponent implements OnInit {
 				this.top10SpentOn(this.products.slice());
 				this.toastrService.success(result.name, 'Vöru bætt við');
 			}, err => {
-				this.toastrService.error(err.statusText, 'Úbbs, eitthvað fór úrskeiðis');
+				this.toastrService.error(err.statusText, 'Ekki tókst að bæta við vöru');
 			});
 		}).catch( err => {
 			this.toastrService.warning('Hætt við að bæta við vöru', 'Viðvörun');
@@ -136,9 +136,9 @@ export class SellerDetailsComponent implements OnInit {
 		modalInstance.result.then(obj => {
 			this.service.editProduct(this.sellerId, obj).subscribe( result => {
 				this.products[index] = result['product'];
-				this.toastrService.success(product.name, 'Vöru var breytt');
+				this.toastrService.success(product.name, 'Aðgerð tókst');
 			}, err => {
-				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+				this.toastrService.error(err.statusText, 'Ekki tókst að breyta vöru');
 			});
 		}).catch( err => {
 			this.toastrService.warning('Hætt við að breyta vöru', 'Viðvörun');
