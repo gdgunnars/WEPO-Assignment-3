@@ -6,6 +6,7 @@ import { DebugElement } from '@angular/core';
 import {ProductsDialogComponent} from './products-dialog.component';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {FormsModule} from '@angular/forms';
+import {ToastrService} from 'ngx-toastr/toastr';
 
 describe('ProductsDialogComponent', () => {
 	let component: ProductsDialogComponent;
@@ -16,12 +17,19 @@ describe('ProductsDialogComponent', () => {
 		close: jasmine.createSpy('close')
 	};
 
+	const mockToastrService = {
+		warning: jasmine.createSpy('warning')
+	};
+
 	beforeEach(async(() => {
 		TestBed.configureTestingModule({
 			declarations: [ ProductsDialogComponent ],
 			providers: [ {
 				provide: NgbActiveModal,
 				usevalue: mockModal
+			}, {
+				provide: ToastrService,
+				usevalue: mockToastrService
 			}],
 			imports: [
 				FormsModule
@@ -156,5 +164,23 @@ describe('ProductsDialogComponent', () => {
 			component.onOk();
 			expect(mockModal.close).not.toHaveBeenCalled();
 		});
+
+		// TODO: find out why I keep getting undefined for ToastrService in component
+		/*it('should display a toastr warning when form hasnt been filled', () => {
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: undefined,
+				quantitySold: undefined,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.onOk();
+			expect(mockToastrService.warning).toHaveBeenCalled();
+		});*/
 	});
 });
