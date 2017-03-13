@@ -551,5 +551,24 @@ describe('SellerDetailsComponent', () => {
 			expect(component.products[0]).not.toBe(mockService.updatedProduct);
 			expect(mockToastrService.error).toHaveBeenCalled();
 		});
+
+		it('should catch error when modal window is unexpectedly closed and display toastr', () => {
+			// Arrange:
+			const product = {
+				id: 1,
+				name: 'trefill',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/scarf.jpg'
+			};
+			mockModal.pressedOk = false;
+			mockService.successAddProduct = true;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.onProductEdit(product);
+			expect(mockToastrService.warning).toHaveBeenCalled();
+		});
 	});
 });

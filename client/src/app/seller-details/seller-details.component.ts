@@ -140,6 +140,8 @@ export class SellerDetailsComponent implements OnInit {
 			}, err => {
 				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
 			});
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að breyta vöru', 'Viðvörun');
 		});
 	}
 
