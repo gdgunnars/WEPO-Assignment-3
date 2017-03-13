@@ -116,14 +116,17 @@ export class SellerDetailsComponent implements OnInit {
 	}
 
 	onProductEdit(product: SellerProduct) {
+		// Getting index to know what item to change if success.
+		const index = this.products.indexOf(product);
 		const modalInstance = this.modalService.open(ProductsDialogComponent);
 		modalInstance.componentInstance.product = Object.assign({}, product);
 		modalInstance.componentInstance.editing = true;
 		modalInstance.result.then(obj => {
 			this.service.editProduct(this.sellerId, obj).subscribe( result => {
-				product = obj;
-				console.log(product);
+				this.products[index] = obj;
 				this.toastrService.success(product.name, 'Vöru var breytt');
+			}, err => {
+				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
 			});
 		});
 	}
