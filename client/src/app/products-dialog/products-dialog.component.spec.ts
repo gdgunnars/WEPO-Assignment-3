@@ -74,6 +74,7 @@ describe('ProductsDialogComponent', () => {
 		it('should call dismiss function', () => {
 			// Arrange:
 			component.activeModal = mockModal;
+			mockModal.dismiss.calls.reset();
 
 			// Act:
 			component.onCancel();
@@ -82,13 +83,78 @@ describe('ProductsDialogComponent', () => {
 	});
 
 	describe('when modal window is closed with OK button', () => {
-		it('should call close function', () => {
+		it('should call close function when name, price and quantitySold has been filled in', () => {
 			// Arrange:
+			component.product = {
+				id: 0,
+				name: 'Sokkar',
+				price: 990,
+				quantitySold: 3250,
+				quantityInStock: 0,
+				imagePath: ''
+			};
 			component.activeModal = mockModal;
+			mockModal.close.calls.reset();
 
 			// Act:
 			component.onOk();
 			expect(mockModal.close).toHaveBeenCalled();
+		});
+
+		it('should not call close function when name, price and quantitySold have not been filled in', () => {
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: 990,
+				quantitySold: 3250,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+			component.activeModal = mockModal;
+			mockModal.close.calls.reset();
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: 'Sokkar',
+				price: undefined,
+				quantitySold: 3250,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: 'Sokkar',
+				price: 990,
+				quantitySold: undefined,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: undefined,
+				quantitySold: undefined,
+				quantityInStock: 0,
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
 		});
 	});
 });

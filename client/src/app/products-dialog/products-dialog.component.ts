@@ -23,7 +23,11 @@ export class ProductsDialogComponent implements OnInit {
 	}
 
 	onOk() {
-		this.activeModal.close(this.product);
+		if (this.product.name !== ''
+		&& this.product.price !== undefined
+		&& this.product.quantitySold !== undefined) {
+			this.activeModal.close(this.product);
+		}
 	}
 
 	initalizeEmptyProduct() {
@@ -31,8 +35,8 @@ export class ProductsDialogComponent implements OnInit {
 			this.product = {
 				id: 0,
 				name: '',
-				price: 0,
-				quantitySold: 0,
+				price: undefined,
+				quantitySold: undefined,
 				quantityInStock: 0,
 				imagePath: ''
 			};
