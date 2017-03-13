@@ -279,7 +279,7 @@ describe('SellerDetailsComponent', () => {
 			fixture.detectChanges();
 			de = fixture.debugElement.query(By.css('ngb-alert'));
 			expect(component.products.length).toEqual(0);
-			expect(de.nativeElement.textContent).toContain('Þessi seljandi hefur engar vörur til sölu.');
+			expect(de.nativeElement.textContent).toContain('Þessi söluaðili hefur engar vörur til sölu.');
 		});
 	});
 
