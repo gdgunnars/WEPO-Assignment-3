@@ -1,23 +1,51 @@
+html,
+body {
+	margin:0;
+	padding:0;
+	height:100%;
+}
+
 /* You can add global styles to this file, and also import other style files */
 .btn-product {
     width: 100%;
   }
 
 /* item styles */
-.item-image {
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 50%;
-}
-.item-image img {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto;
+.card {
+  float: left;
+  padding: .75rem;
+  margin-bottom: 2rem;
+  border: 0;
 }
 
-nav {
-	margin-bottom: 10px;
+.card > img {
+  height: 280px;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: .75rem;
+}
+
+.card-text {
+  font-size: 85%;
+}
+
+.margin-bottom {
+  margin-bottom: 10px;
+}
+
+#wrapper {
+    min-height: 100%;
+    position: relative;
+}
+
+#footer {
+    width:100%;
+    position:absolute;
+    bottom:0;
+    left:0;
+}
+
+#content {
+    padding-bottom: 2rem;
 }

@@ -11,6 +11,12 @@
     "lib": [
       "es2016",
       "dom"
+    ],
+    "types": [
+      "jasmine"
     ]
-  }
+  },
+  "include": [
+    "node_modules/@types"
+  ]
 }

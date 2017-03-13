@@ -1,11 +1,11 @@
 <div class="container">
 	<div class="row" *ngIf="seller"> 
-		<div class="col-sm-12 col-md-3 ">    
-			<div class="item-image">
-			<img class="img" src="{{seller.imagePath}}" alt="SellerImage" /> 
+		<div class="col-sm-12 col-md-4 ">    
+			<div class="card mb-3">
+				<img class="card-img-top img-responsive img-card" src="{{seller.imagePath}}" alt="SellerImage" /> 
 			</div>
 		</div>
-		<div class="col-sm-12 col-md-6 col align-self-center">
+		<div class="col-sm-12 col-md-5 col align-self-center">
 			<h3 class="col-sm-12 col-xs-12">{{seller.name}}</h3>
 			<h4 class="col-sm-12 col-xs-12"> {{seller.category}} </h4>
 		</div>
@@ -16,48 +16,66 @@
 	</div>
 	<br />
 	<div>
-		<ngb-tabset>
-			<ngb-tab title="Allar Vörur">
-				<template ngbTabContent>
-					<div class="container-fluid">
-						<div class="row">
-							<div *ngFor="let prod of products" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-								<app-product-card 
-									[product]="prod" 
-									(productUpdate)="onProductEdited($event)">
-								</app-product-card>
+		<div *ngIf="errorGettingProducts">
+			<div id="warning">
+				<ngb-alert [dismissible]="false" type="warning">
+					Eitthvað fór úrskeiðis
+				</ngb-alert>
+			</div>
+		</div>
+		<div *ngIf="finishedLoading">
+			<div *ngIf="noProducts">
+				<p>
+					<ngb-alert [dismissible]="false" type="info">
+						Þessi seljandi hefur engar vörur til sölu.
+					</ngb-alert>
+				</p>
+			</div>
+			<div *ngIf="!noProducts">
+				<ngb-tabset>
+					<ngb-tab title="Allar Vörur">
+						<template ngbTabContent>
+							<div class="container-fluid">
+								<div class="row">
+									<div *ngFor="let prod of products" class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+										<app-product-card 
+											[product]="prod" 
+											(productUpdate)="onProductEdited($event)">
+										</app-product-card>
+									</div>
+								</div>
 							</div>
-						</div>
-					</div>
-				</template>
-			</ngb-tab>
-			<ngb-tab>
-				<template ngbTabTitle>Mest seldu vörurnar</template>
-				<template ngbTabContent>
-					<div class="row">
-						<div *ngFor="let prod of top10" class="col-sm-5 col-md-3 product-container">
-							<app-product-card 
-								[product]="prod" 
-								(productUpdate)="onProductEdited($event)">
-							</app-product-card>
-						</div>
-					</div>
-				</template>
-			</ngb-tab>
-			<ngb-tab>
-				<template ngbTabTitle>Top 10</template>
-				<template ngbTabContent>
-					<div class="row">
-						<div *ngFor="let prod of top10Spent" class="col-sm-5 col-md-3 product-container">
-							<app-product-card 
-								[product]="prod" 
-								(productUpdate)="onProductEdited($event)">
-							</app-product-card>
-						</div>
-					</div>
-				</template>
-			</ngb-tab>
-		</ngb-tabset>
+						</template>
+					</ngb-tab>
+					<ngb-tab>
+						<template ngbTabTitle>Mest seldu vörurnar</template>
+						<template ngbTabContent>
+							<div class="row">
+								<div *ngFor="let prod of top10" class="col-sm-5 col-md-3 product-container">
+									<app-product-card 
+										[product]="prod" 
+										(productUpdate)="onProductEdited($event)">
+									</app-product-card>
+								</div>
+							</div>
+						</template>
+					</ngb-tab>
+					<ngb-tab>
+						<template ngbTabTitle>Top 10</template>
+						<template ngbTabContent>
+							<div class="row">
+								<div *ngFor="let prod of top10Spent" class="col-sm-5 col-md-3 product-container">
+									<app-product-card 
+										[product]="prod" 
+										(productUpdate)="onProductEdited($event)">
+									</app-product-card>
+								</div>
+							</div>
+						</template>
+					</ngb-tab>
+				</ngb-tabset>
+			</div>
+		</div>
 	</div>
 </div>
 <template ngbModalContainer></template>

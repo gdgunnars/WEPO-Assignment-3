@@ -24,11 +24,16 @@ describe('ListSellersComponent', () => {
 		open: function() {
 			return {
 				result: {
-					then: function(fnOk, fnCancel) {
+					then: function(fnOk) {
 						if (mockModal.pressedOk === true) {
 							fnOk(mockModal.seller);
-						} else {
-							fnCancel('error');
+						}
+						return {
+							catch: function (fnError) {
+								if (!mockModal.pressedOk) {
+									fnError();
+								}
+							}
 						}
 					}
 				}

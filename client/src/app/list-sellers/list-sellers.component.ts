@@ -32,7 +32,7 @@ export class ListSellersComponent implements OnInit {
 		if (id && id !== 0) {
 			this.router.navigate([`/sellers/details/${id}`]);
 		} else {
-			this.toastrService.warning('Þessi seljandi er ekki til', 'Obbs');
+			this.toastrService.warning('Þessi seljandi er ekki til', 'Viðvörun');
 		}
 	}
 
@@ -45,7 +45,7 @@ export class ListSellersComponent implements OnInit {
 			}
 		}, err => {
 			this.finishedLoading = true;
-			this.toastrService.warning('Ekki tókst að sækja seljendur', 'VILLA');
+			this.toastrService.warning('Ekki tókst að sækja seljendur', 'Viðvörun');
 		});
 	}
 
