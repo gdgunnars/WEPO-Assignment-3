@@ -123,7 +123,7 @@ export class SellerDetailsComponent implements OnInit {
 		modalInstance.componentInstance.editing = true;
 		modalInstance.result.then(obj => {
 			this.service.editProduct(this.sellerId, obj).subscribe( result => {
-				this.products[index] = obj;
+				this.products[index] = result['product'];
 				this.toastrService.success(product.name, 'Vöru var breytt');
 			}, err => {
 				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
