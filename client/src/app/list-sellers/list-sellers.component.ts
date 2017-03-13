@@ -18,6 +18,7 @@ export class ListSellersComponent implements OnInit {
 	sellers: Seller[];
 	finishedLoading = false;
 	noSellers = true;
+	errorGettingSellers = false;
 
 	constructor(private router: Router,
 				private service: SellersService,
@@ -44,7 +45,7 @@ export class ListSellersComponent implements OnInit {
 				this.noSellers = false;
 			}
 		}, err => {
-			this.finishedLoading = true;
+			this.errorGettingSellers = true;
 			this.toastrService.warning('Ekki tókst að sækja seljendur', 'Viðvörun');
 		});
 	}

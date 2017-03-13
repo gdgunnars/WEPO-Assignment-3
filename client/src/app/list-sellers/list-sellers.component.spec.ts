@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 describe('ListSellersComponent', () => {
 	let component: ListSellersComponent;
 	let fixture: ComponentFixture<ListSellersComponent>;
+	let de: DebugElement;
 
 	const  mockModal = {
 		pressedOk: true,
@@ -172,14 +173,32 @@ describe('ListSellersComponent', () => {
 		});
 	});
 
-	describe('when SellerService fails to get list of sellers', () => {
-		it('should display an error message', () => {
+	describe('when getting seller products fails', () => {
+		it('should display an html error message', () => {
 			// Arrange:
 			mockService.successGetSellers = false;
 
 			// Act:
 			component.getSellers();
-			expect(component.finishedLoading).toBe(true);
+			fixture.detectChanges();
+			de = fixture.debugElement.query(By.css('ngb-alert'));
+			expect(de.nativeElement.textContent).toContain('Eitthvað fór úrskeiðis.');
+		});
+	});
+
+	describe('when SellerService gets empty list of sellers', () => {
+		it('should display an html info message', () => {
+			// Arrange:
+			mockService.sellers = [];
+			mockService.successGetSellers = true;
+			component.errorGettingSellers = false;
+
+			// Act:
+			component.getSellers();
+			fixture.detectChanges();
+			de = fixture.debugElement.query(By.css('ngb-alert'));
+			expect(component.sellers.length).toEqual(0);
+			expect(de.nativeElement.textContent).toContain('Engir söluaðilar til að birta!');
 		});
 	});
 
