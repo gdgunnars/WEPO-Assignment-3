@@ -12,7 +12,7 @@ export class SellerDialogComponent implements OnInit {
 
 	seller: Seller;
 
-	constructor(public activeModal: NgbActiveModal) {}
+	constructor(public activeModal: NgbActiveModal) { }
 
 	ngOnInit() {
 		this.initalizeEmptySeller();
@@ -23,7 +23,9 @@ export class SellerDialogComponent implements OnInit {
 	}
 
 	onOk() {
-		this.activeModal.close(this.seller);
+		if (this.seller.name !== '' && this.seller.category !== '') {
+			this.activeModal.close(this.seller);
+		}
 	}
 
 	initalizeEmptySeller() {

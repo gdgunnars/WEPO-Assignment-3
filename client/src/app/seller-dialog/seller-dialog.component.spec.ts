@@ -73,6 +73,7 @@ describe('SellerDialogComponent', () => {
 		it('should call dismiss function', () => {
 			// Arrange:
 			component.activeModal = mockModal;
+			mockModal.dismiss.calls.reset();
 
 			// Act:
 			component.onCancel();
@@ -81,13 +82,55 @@ describe('SellerDialogComponent', () => {
 	});
 
 	describe('when modal window is closed with OK button', () => {
-		it('should call close function', () => {
+		it('should call close function when name and category has been filled in', () => {
 			// Arrange:
 			component.activeModal = mockModal;
+			component.seller = {
+				id: 0,
+				name: 'Kalli',
+				category: 'Hestar',
+				imagePath: ''
+			};
+			mockModal.close.calls.reset();
 
 			// Act:
 			component.onOk();
 			expect(mockModal.close).toHaveBeenCalled();
+		});
+
+		it('should not call close function when name and category have not been filled in', () => {
+			// Arrange:
+			component.activeModal = mockModal;
+			component.seller = {
+				id: 0,
+				name: 'Jón',
+				category: '',
+				imagePath: ''
+			};
+			mockModal.close.calls.reset();
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+			// Arrange:
+			component.seller = {
+				id: 0,
+				name: '',
+				category: 'Húsgögn',
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+			// Arrange:
+			component.seller = {
+				id: 0,
+				name: '',
+				category: '',
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
 		});
 	});
 });
