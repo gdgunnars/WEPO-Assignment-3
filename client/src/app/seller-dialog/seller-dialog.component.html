@@ -20,7 +20,8 @@
 		<div class="form-group">
 			<label [attr.for]="seller.imagePath"> Mynd </label>
 			<input [(ngModel)]="seller.imagePath" type="url" name="seller_image" 
-				placeholder="Put your image path here" class="form-control" />
+				placeholder="Put your image path here" class="form-control" 
+				pattern="https?://.+" />
 		</div>
 		<button type="button" class="btn btn-secondary" (click)="onCancel()"> Hætta </button>
 		<input type="submit" class="btn btn-success" value="Ok" />

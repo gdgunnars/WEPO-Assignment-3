@@ -12,7 +12,7 @@ export class ProductCardComponent implements OnInit {
 	product: SellerProduct;
 
 	@Output()
-	productUpdated = new EventEmitter();
+	productUpdate = new EventEmitter();
 
 	constructor() { }
 
@@ -20,8 +20,7 @@ export class ProductCardComponent implements OnInit {
 	}
 
 	onEdit() {
-		this.product.name = 'smuuu';
-		this.productUpdated.emit(this.product);
+		this.productUpdate.emit(this.product);
 	}
 
 }

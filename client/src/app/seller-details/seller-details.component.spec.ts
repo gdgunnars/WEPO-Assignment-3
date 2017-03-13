@@ -77,6 +77,7 @@ describe('SellerDetailsComponent', () => {
 		successGetSeller: true,
 		successEditSeller: true,
 		successAddProduct: true,
+		successEditProduct: true,
 		product: {
 			id: 1,
 			name: 'Hanski',
@@ -84,6 +85,14 @@ describe('SellerDetailsComponent', () => {
 			quantitySold: 500,
 			quantityInStock: 100,
 			imagePath: 'http://www.example.com/image.jpg'
+		},
+		updatedProduct: {
+			id: 1,
+			name: 'trefill',
+			price: 1995,
+			quantitySold: 500,
+			quantityInStock: 100,
+			imagePath: 'http://www.example.com/scarf.jpg'
 		},
 		products: [{
 			id: 1,
@@ -137,6 +146,17 @@ describe('SellerDetailsComponent', () => {
 				subscribe: function(fnSuccess, fnError) {
 					if (mockService.successAddProduct === true) {
 						fnSuccess({product: mockService.product});
+					} else {
+						fnError({statusText: 'Error'});
+					}
+				}
+			};
+		},
+		editProduct: function(obj) {
+			return {
+				subscribe: function(fnSuccess, fnError) {
+					if ( mockService.successEditProduct === true) {
+						fnSuccess({product: mockService.updatedProduct});
 					} else {
 						fnError({statusText: 'Error'});
 					}
@@ -453,6 +473,67 @@ describe('SellerDetailsComponent', () => {
 			// Act:
 			component.addProduct();
 			expect(mockToastrService.warning).toHaveBeenCalled();
+		});
+	});
+
+	describe('when editing a product successfully', () => {
+		it('should edit the program in the list of products', () => {
+			// Arrange:
+			mockService.product = {
+				id: 1,
+				name: 'Hanski',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/image.jpg'
+			};
+			mockService.updatedProduct = {
+				id: 1,
+				name: 'trefill',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/scarf.jpg'
+			};
+			component.products = [];
+			component.products.push(mockService.product);
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.onProductEdit(mockService.product);
+			expect(component.products[0]).toBe(mockService.updatedProduct);
+			expect(mockToastrService.success).toHaveBeenCalled();
+		});
+	});
+
+	describe('when editing a product fails', () => {
+		it('should not edit the program in the list of products', () => {
+			// Arrange:
+			mockService.product = {
+				id: 1,
+				name: 'Hanski',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/image.jpg'
+			};
+			mockService.updatedProduct = {
+				id: 1,
+				name: 'trefill',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/scarf.jpg'
+			};
+			component.products = [];
+			component.products.push(mockService.product);
+			mockService.successEditProduct = false;
+			mockModal.pressedOk = true;
+
+			// Act:
+			component.onProductEdit(mockService.product);
+			expect(component.products[0]).not.toBe(mockService.updatedProduct);
+			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 	});
 });

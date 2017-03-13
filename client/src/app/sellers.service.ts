@@ -66,4 +66,16 @@ export class SellersService {
 			return <SellerProduct> response.json();
 		});
 	}
+
+	editProduct(sellerId: Number, product: SellerProduct): Observable<SellerProduct> {
+		const body = {
+			name: product.name,
+			price: product.price,
+			imagePath: product.imagePath
+		};
+		return this.http.put(`http://localhost:5000/api/sellers/${sellerId}/products/${product.id}`, body)
+			.map(response => {
+			return <SellerProduct> response.json();
+		});
+	}
 }
