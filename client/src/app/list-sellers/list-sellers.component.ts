@@ -59,6 +59,8 @@ export class ListSellersComponent implements OnInit {
 			}, err => {
 				this.toastrService.error('Seljandanum var ekki bætt við', 'Villa kom upp');
 			});
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að bæta við seljanda', 'Viðvörun');
 		});
 	}
 }

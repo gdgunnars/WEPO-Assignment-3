@@ -29,7 +29,7 @@ describe('ListSellersComponent', () => {
 							fnOk(mockModal.seller);
 						}
 						return {
-							catch: function (fnError) {
+							catch: function(fnError) {
 								if (!mockModal.pressedOk) {
 									fnError();
 								}
@@ -209,6 +209,17 @@ describe('ListSellersComponent', () => {
 			// Act:
 			component.addSeller();
 			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should catch error when modal window is unexpectedly closed and display toastr', () => {
+			// Arrange:
+			mockModal.pressedOk = false;
+			mockService.successAddSeller = false;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.addSeller();
+			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});
 });
