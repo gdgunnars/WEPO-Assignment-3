@@ -267,6 +267,22 @@ describe('SellerDetailsComponent', () => {
 		});
 	});
 
+	describe('when seller has no products', () => {
+		it('should display an html info message', () => {
+			// Arrange:
+			mockService.products = [];
+			mockService.successGetProducts = true;
+			component.errorGettingProducts = false;
+
+			// Act:
+			component.getSellerProducts(1);
+			fixture.detectChanges();
+			de = fixture.debugElement.query(By.css('ngb-alert'));
+			expect(component.products.length).toEqual(0);
+			expect(de.nativeElement.textContent).toContain('Þessi seljandi hefur engar vörur til sölu.');
+		});
+	});
+
 	describe('when editing seller successfully', () => {
 		it('should set seller equal to the edited seller', () => {
 			// Arrange:

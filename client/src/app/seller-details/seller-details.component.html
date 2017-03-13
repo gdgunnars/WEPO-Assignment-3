@@ -17,11 +17,11 @@
 	<br />
 	<div>
 		<div *ngIf="errorGettingProducts">
-			<div id="warning">
+			<p>
 				<ngb-alert [dismissible]="false" type="warning">
 					Eitthvað fór úrskeiðis
 				</ngb-alert>
-			</div>
+			</p>
 		</div>
 		<div *ngIf="finishedLoading">
 			<div *ngIf="noProducts">
