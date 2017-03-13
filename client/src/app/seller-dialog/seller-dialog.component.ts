@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
 import {Seller} from '../interfaces/seller';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
 	selector: 'app-seller-dialog',
@@ -12,7 +13,8 @@ export class SellerDialogComponent implements OnInit {
 
 	seller: Seller;
 
-	constructor(public activeModal: NgbActiveModal) { }
+	constructor(public activeModal: NgbActiveModal,
+				private toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.initalizeEmptySeller();
@@ -25,6 +27,8 @@ export class SellerDialogComponent implements OnInit {
 	onOk() {
 		if (this.seller.name !== '' && this.seller.category !== '') {
 			this.activeModal.close(this.seller);
+		} else {
+			this.toastrService.warning('Vinsamlegast fylltu út í allar viðeigandi upplýsingar', 'Viðvörun');
 		}
 	}
 
