@@ -3,13 +3,27 @@ body {
 	margin:0;
 	padding:0;
 	height:100%;
+  background-color: #efefef;
 }
 
 /* You can add global styles to this file, and also import other style files */
 .btn-product {
     width: 100%;
+    margin: 0.1rem;
+    font-family: 'Lato', sans-serif;
   }
 
+a:hover {
+  cursor: pointer;
+}
+
+a:not([href]):not([tabindex]) {
+  color: white;
+}
+
+.btn-list-sellers {
+  margin-bottom: 0.5rem;
+}
 td:last-child {
   text-align: right;
 }
@@ -20,6 +34,7 @@ td:last-child {
   padding: .75rem;
   margin-bottom: 2rem;
   border: 0;
+  width: 100%;
 }
 
 .card > img {
@@ -28,6 +43,11 @@ td:last-child {
   object-fit: cover;
   object-position: center;
   margin-bottom: .75rem;
+}
+
+.card > img.card-photo {
+  max-width: 100%; 
+  height: 200px;
 }
 
 .card.sel-list {
@@ -52,6 +72,18 @@ td:last-child {
 
 .card-text {
   font-size: 85%;
+}
+
+.card-title {
+  margin-bottom: 0.3rem;
+}
+
+.card-block {
+  padding: 0px;
+}
+
+.card-label {
+  margin: 0 auto 0.3rem auto;
 }
 
 .margin-bottom {

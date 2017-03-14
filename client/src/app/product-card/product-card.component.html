@@ -1,27 +1,27 @@
-<div *ngIf="product"  class="card mb-3">
-	<img *ngIf="product.imagePath.length > 0" class="card-img-top img-responsive img-card" [src]="product.imagePath" alt="Card image cap">
-	<img *ngIf="product.imagePath.length === 0" class="card-img-top img-responsive img-card" src="../../assets/placeholder2.png" alt="Card image cap">
-	<div class="card-block">
-		<h4 class="card-title">{{product.name}}</h4>
 
+<div *ngIf="product"  class="card mb-3">
+	<img *ngIf="product.imagePath.length > 0" class="card-img-top img-fluid rounded-circle card-photo" [src]="product.imagePath" alt="Card image cap">
+	<img *ngIf="product.imagePath.length === 0" class="card-img-top img-fluid rounded-circle card-photo" src="../../assets/placeholder2.png" alt="Card image cap">
+<div *ngIf="product" class="card mb-3">
+	<div class="card-block">
+		<h4 class="card-title text-center">{{product.name}}</h4>
 		<div class="row">
-			<div class="col-md-6 col-xs-6">
-				<p> Verð: {{product.price}} Kr.</p>
-			</div>
-			<div class="col-md-6 col-xs-6 text-right">
-				<p>
-					<label>Fjöldi: {{product.quantityInStock}} stk</label>
-				</p>
-			</div>
+			<label *ngIf="product.price == 0" class="card-label text-success"><strong>Frítt!</strong></label>
+			<label *ngIf="product.price > 0" class="card-label">Verð: {{product.price}} Kr.</label>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
-				<a class="btn btn-primary btn-product" (click)="onEdit()" >Edit</a> 
-			</div>
-			<div class="col-md-6">
-				<a href="#" class="btn btn-success btn-product">Buy</a>
-			</div>
+			<label class="card-label">Á lager: {{product.quantityInStock}} stk</label>
 		</div>
 		<p class="card-text"><small class="text-muted">{{product.quantitySold}} stk hafa verið seld</small></p>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<a class="btn btn-primary btn-product" (click)="onEdit()" >BREYTA</a> 
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<a class="btn btn-success btn-product">KAUPA</a>
+		</div>
 	</div>
 </div>
