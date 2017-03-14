@@ -320,7 +320,7 @@ describe('SellerDetailsComponent', () => {
 			};
 
 			const oldSeller = component.seller;
-			
+
 			mockModal.seller = {
 				id: 2,
 				name: 'Kalli',
