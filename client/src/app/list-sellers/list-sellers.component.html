@@ -4,7 +4,7 @@
 			<h2>Söluaðilar</h2>
 		</div>
 		<div class="text-right">
-			<button type="button" class="btn btn-primary btn-list-sellers" (click)="addSeller()"> Bæta við Söluaðila</button>
+			<a class="btn btn-primary btn-list-sellers" (click)="addSeller()"> Bæta við Söluaðila</a>
 		</div>
 	</div>
 	<div *ngIf="errorGettingSellers">
@@ -40,7 +40,7 @@
 									{{s.category}}
 								</td>
 								<td>
-									<a (click)="editSeller(s)" class="btn btn-info">Breyta </a>
+									<a (click)="editSeller(s)" class="btn btn-info">Breyta söluaðila</a>
 								</td>
 							</tr>					
 					</tbody>
