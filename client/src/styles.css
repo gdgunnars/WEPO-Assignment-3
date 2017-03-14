@@ -35,6 +35,7 @@ td:last-child {
   margin-bottom: 2rem;
   border: 0;
   width: 100%;
+  background-color: #efefef;
 }
 
 .card > img {
@@ -90,6 +91,10 @@ td:last-child {
   margin-bottom: 10px;
 }
 
+.tab-content {
+  padding-top: 2rem;
+}
+
 #wrapper {
     min-height: 100%;
     position: relative;
@@ -103,7 +108,7 @@ td:last-child {
 }
 
 #content {
-    padding-bottom: 2rem;
+    padding-bottom: 5rem;
 }
 
 .spinner-container {
