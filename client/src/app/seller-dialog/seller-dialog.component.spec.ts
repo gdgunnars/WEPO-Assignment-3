@@ -6,8 +6,8 @@ import { DebugElement } from '@angular/core';
 import { NgModule } from '@angular/core';
 import { SellerDialogComponent } from './seller-dialog.component';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import {FormsModule} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr/toastr';
+import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr/toastr';
 
 describe('SellerDialogComponent', () => {
 	let component: SellerDialogComponent;

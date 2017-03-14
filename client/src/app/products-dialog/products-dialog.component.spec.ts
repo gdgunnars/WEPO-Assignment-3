@@ -3,10 +3,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import {ProductsDialogComponent} from './products-dialog.component';
-import {NgbActiveModal} from '@ng-bootstrap/ng-bootstrap';
-import {FormsModule} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr/toastr';
+import { ProductsDialogComponent } from './products-dialog.component';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { FormsModule } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr/toastr';
 
 describe('ProductsDialogComponent', () => {
 	let component: ProductsDialogComponent;
@@ -29,7 +29,7 @@ describe('ProductsDialogComponent', () => {
 				usevalue: mockModal
 			}, {
 				provide: ToastrService,
-				usevalue: mockToastrService
+				useValue: mockToastrService
 			}],
 			imports: [
 				FormsModule
@@ -166,7 +166,7 @@ describe('ProductsDialogComponent', () => {
 		});
 
 		// TODO: find out why I keep getting undefined for ToastrService in component
-		/*it('should display a toastr warning when form hasnt been filled', () => {
+		it('should display a toastr warning when form hasnt been filled', () => {
 			// Arrange:
 			component.product = {
 				id: 0,
@@ -181,6 +181,6 @@ describe('ProductsDialogComponent', () => {
 			// Act:
 			component.onOk();
 			expect(mockToastrService.warning).toHaveBeenCalled();
-		});*/
+		});
 	});
 });
