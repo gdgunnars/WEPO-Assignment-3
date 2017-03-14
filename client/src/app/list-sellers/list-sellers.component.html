@@ -4,7 +4,7 @@
 			<h2>Söluaðilar</h2>
 		</div>
 		<div class="text-right">
-			<button type="button" class="btn btn-primary" (click)="addSeller()"> Bæta við Söluaðila</button>
+			<button type="button" class="btn btn-primary btn-list-sellers" (click)="addSeller()"> Bæta við Söluaðila</button>
 		</div>
 	</div>
 	<div *ngIf="errorGettingSellers">
@@ -20,7 +20,7 @@
 				<table class="table table-hover">
 					<thead class="thead-inverse">
 						<tr>
-							<th> # </th>
+							<th></th>
 							<th> Seljandi </th>
 							<th> Flokkur </th>
 						</tr>
