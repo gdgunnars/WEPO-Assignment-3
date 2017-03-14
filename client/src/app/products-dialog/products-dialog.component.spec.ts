@@ -115,7 +115,7 @@ describe('ProductsDialogComponent', () => {
 				id: 0,
 				name: '',
 				price: 990,
-				quantitySold: 3250,
+				quantitySold: 0,
 				quantityInStock: 0,
 				imagePath: ''
 			};
@@ -130,7 +130,7 @@ describe('ProductsDialogComponent', () => {
 				id: 0,
 				name: 'Sokkar',
 				price: undefined,
-				quantitySold: 3250,
+				quantitySold: 0,
 				quantityInStock: 0,
 				imagePath: ''
 			};
@@ -143,8 +143,8 @@ describe('ProductsDialogComponent', () => {
 				id: 0,
 				name: 'Sokkar',
 				price: 990,
-				quantitySold: undefined,
-				quantityInStock: 0,
+				quantitySold: 0,
+				quantityInStock: undefined,
 				imagePath: ''
 			};
 			// Act:
@@ -156,16 +156,54 @@ describe('ProductsDialogComponent', () => {
 				id: 0,
 				name: '',
 				price: undefined,
-				quantitySold: undefined,
-				quantityInStock: 0,
+				quantitySold: 0,
+				quantityInStock: undefined,
 				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: -15,
+				quantitySold: 0,
+				quantityInStock: undefined,
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: undefined,
+				quantitySold: 0,
+				quantityInStock: -15,
+				imagePath: ''
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
+
+			// Arrange:
+			component.product = {
+				id: 0,
+				name: '',
+				price: undefined,
+				quantitySold: 0,
+				quantityInStock: undefined,
+				imagePath: 'illegal url'
 			};
 			// Act:
 			component.onOk();
 			expect(mockModal.close).not.toHaveBeenCalled();
 		});
 
-		// TODO: find out why I keep getting undefined for ToastrService in component
 		it('should display a toastr warning when form hasnt been filled', () => {
 			// Arrange:
 			component.product = {

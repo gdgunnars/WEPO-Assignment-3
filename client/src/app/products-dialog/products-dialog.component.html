@@ -7,28 +7,32 @@
 <div class="modal-body">
 	<form (submit)="onOk()">
 		<div class="form-group">
-			<label [attr.for]="product.name"> Nafn vöru</label>
+			<label [attr.for]="product.name"> Nafn vöru <span class="text-danger">*</span></label>
 			<input [(ngModel)]="product.name" type="text" name="product_name" 
-				placeholder="t.d. Trefill" class="form-control" autofocus required />
+				placeholder="" class="form-control" autofocus />
+			<small *ngIf="nameError" class="form-text text-danger">{{nameError}}</small>
 		</div>
 		<div class="form-group">
-			<label [attr.for]="product.price"> Verð í kr</label>
+			<label [attr.for]="product.price"> Verð í kr <span class="text-danger">*</span></label>
 			<input [(ngModel)]="product.price" type="text" name="product_price" 
-				placeholder="t.d. 1200" class="form-control" required
-				pattern="[0-9]*" />
+				placeholder="" class="form-control" />
+			<small *ngIf="priceError" class="form-text text-danger">{{priceError}}</small>
 		</div>
 		<div class="form-group" [hidden]="editing">
-			<label [attr.for]="product.quantityInStock"> Magn á lager</label>
+			<label [attr.for]="product.quantityInStock"> Magn á lager <span class="text-danger">*</span></label>
 			<input [(ngModel)]="product.quantityInStock" type="text" name="product_quantityInStock" 
-				placeholder="t.d. 80" class="form-control" required
-				pattern="[0-9]*" />
+				placeholder="" class="form-control" />
+			<small *ngIf="quantityInStockError" class="form-text text-danger">{{quantityInStockError}}</small>
 		</div>
 		<div class="form-group">
 			<label [attr.for]="product.imagePath"> Hlekkur á mynd</label>
-			<input [(ngModel)]="product.imagePath" type="URL" name="product_imagePath" 
+			<input [(ngModel)]="product.imagePath" type="text" name="product_imagePath" 
 				placeholder="http://imgur.com/" class="form-control" />
+			<small *ngIf="pathError" class="form-text text-danger">{{pathError}}</small>
 		</div>
-
+		<small class="form-text">
+			<span class="text-danger">*</span> Nauðsynlegar upplýsingar
+		</small><br />
 		<button type="button" class="btn btn-secondary" (click)="onCancel()"> Hætta </button>
 		<input type="submit" class="btn btn-success" value="Ok" />
 	</form>		
