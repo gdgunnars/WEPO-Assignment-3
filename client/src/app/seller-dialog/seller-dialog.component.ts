@@ -12,6 +12,9 @@ import { ToastrService } from 'ngx-toastr';
 export class SellerDialogComponent implements OnInit {
 
 	seller: Seller;
+	nameError: string;
+	categoryError: string;
+	pathError: string;
 
 	constructor(public activeModal: NgbActiveModal,
 				private toastrService: ToastrService) { }
@@ -25,10 +28,10 @@ export class SellerDialogComponent implements OnInit {
 	}
 
 	onOk() {
-		if (this.seller.name !== '' && this.seller.category !== '') {
+		if (this.inputIsValid()) {
 			this.activeModal.close(this.seller);
 		} else {
-			this.toastrService.warning('Vinsamlegast fylltu út í allar viðeigandi upplýsingar', 'Viðvörun');
+			this.toastrService.warning('Þú verður að fylla inn allar nauðsynlegar upplýsingar', 'Viðvörun');
 		}
 	}
 
@@ -43,4 +46,30 @@ export class SellerDialogComponent implements OnInit {
 			};
 		}
 	}
+
+	inputIsValid() {
+		// Cleaning previous errors
+		this.nameError = '';
+		this.categoryError = '';
+		this.pathError = '';
+		let isValid = true;
+		const regexp = new RegExp ('^((http[s]?):\\/)\\/?([^:\\/\\s]+)((\\/\\w+)*\\/)([\\w\\-\\.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?$');
+
+		if (this.seller.name === '') {
+			this.nameError = 'Þú verður að gefa söluaðila nafn';
+			isValid = false;
+		}
+		if (this.seller.category === '') {
+			this.categoryError = 'Þú verður að skilgreina flokk';
+			isValid = false;
+		}
+
+		if (this.seller.imagePath !== '' && !regexp.test(this.seller.imagePath)) {
+			this.pathError = 'Slóðin þín verður að vera lögleg URL slóð';
+			isValid = false;
+		}
+
+		return isValid;
+	}
+
 }
