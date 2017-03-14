@@ -26,6 +26,26 @@ body {
   margin-bottom: .75rem;
 }
 
+.card.sel-list {
+  float: left;
+  padding: 0;
+  border: 0;
+  margin: 0;
+  background-color: inherit;
+}
+
+.table td {
+  vertical-align: middle;
+}
+
+.card > img.sel-list {
+  height: 75px;
+  width: 75px;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: .75rem;
+}
+
 .card-text {
   font-size: 85%;
 }
