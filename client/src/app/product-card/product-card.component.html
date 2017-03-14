@@ -1,8 +1,10 @@
+
+<div *ngIf="product"  class="card mb-3">
+	<img *ngIf="product.imagePath.length > 0" class="card-img-top img-fluid rounded-circle card-photo" [src]="product.imagePath" alt="Card image cap">
+	<img *ngIf="product.imagePath.length === 0" class="card-img-top img-fluid rounded-circle card-photo" src="../../assets/placeholder2.png" alt="Card image cap">
 <div *ngIf="product" class="card mb-3">
-	<img class="card-img-top img-fluid rounded-circle card-photo" [src]="product.imagePath" alt="Card image cap">
 	<div class="card-block">
 		<h4 class="card-title text-center">{{product.name}}</h4>
-
 		<div class="row">
 			<label *ngIf="product.price == 0" class="card-label text-success"><strong>Frítt!</strong></label>
 			<label *ngIf="product.price > 0" class="card-label">Verð: {{product.price}} Kr.</label>
@@ -10,7 +12,6 @@
 		<div class="row">
 			<label class="card-label">Á lager: {{product.quantityInStock}} stk</label>
 		</div>
-		
 		<p class="card-text"><small class="text-muted">{{product.quantitySold}} stk hafa verið seld</small></p>
 	</div>
 	<div class="row">
