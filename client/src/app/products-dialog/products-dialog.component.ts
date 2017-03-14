@@ -18,7 +18,8 @@ export class ProductsDialogComponent implements OnInit {
 	quantityInStockError: string;
 	pathError: string;
 
-	constructor(public activeModal: NgbActiveModal, private toastrService: ToastrService) { }
+	constructor(public activeModal: NgbActiveModal,
+				public toastrService: ToastrService) { }
 
 	ngOnInit() {
 		this.initalizeEmptyProduct();
