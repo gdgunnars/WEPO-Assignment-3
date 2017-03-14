@@ -37,6 +37,14 @@ describe('ListSellersComponent', () => {
 							}
 						}
 					}
+				},
+				componentInstance: {
+					seller: {
+						id: 2,
+						name: 'Pattó',
+						category: 'Battery',
+						imagePath: 'http:/someawesomeImage.com/hre.jpg'
+					}
 				}
 			};
 		}
@@ -49,6 +57,7 @@ describe('ListSellersComponent', () => {
 	const mockService = {
 		successGetSellers: true,
 		successAddSeller: true,
+		successEditSeller: true,
 		sellers: [{
 			id: 1,
 			name: 'Dabs',
@@ -79,6 +88,17 @@ describe('ListSellersComponent', () => {
 						fnSuccess(mockService.seller);
 					} else {
 						fnError();
+					}
+				}
+			};
+		},
+		editSeller: function(obj) {
+			return {
+				subscribe: function(fnSuccess, fnError) {
+					if (mockService.successEditSeller === true) {
+						fnSuccess(mockService.seller);
+					} else {
+						fnError({statusText: 'Error 404:'});
 					}
 				}
 			};
@@ -238,6 +258,83 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.addSeller();
+			expect(mockToastrService.warning).toHaveBeenCalled();
+		});
+	});
+
+	describe('when editing seller successfully', () => {
+		it('should set seller equal to the edited seller', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockService.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Viður',
+				imagePath: ''
+			};
+
+			component.sellers = [];
+			component.sellers.push(seller);
+
+			mockService.successEditSeller = true;
+			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
+			expect(component.sellers[0]).toBe(mockService.seller);
+			expect(mockToastrService.success).toHaveBeenCalled();
+		});
+	});
+
+	describe('when editing seller fails', () => {
+		it('should not change user and display an error message', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockService.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Viður',
+				imagePath: ''
+			};
+
+			component.sellers = [];
+			component.sellers.push(seller);
+
+			mockService.successEditSeller = false;
+			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
+			expect(component.sellers[0]).not.toBe(mockService.seller);
+			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should catch error when modal window is unexpectedly closed and display toastr', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockModal.pressedOk = false;
+			mockService.successEditSeller = false;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
 			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});

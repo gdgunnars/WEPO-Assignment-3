@@ -94,14 +94,14 @@ export class SellerDetailsComponent implements OnInit {
 				this.service.editSeller(obj).subscribe( result => {
 					// The seller was updated successfully
 					this.seller = result;
-					const msg = 'Seljandi ' + result.name + ' var uppfærður';
+					const msg = 'Söluaðila ' + result.name + ' var uppfærður';
 					this.toastrService.success(msg, 'Aðgerð tókst');
 				}, err => {
 					this.toastrService.error(err.statusText, 'Ekki tókst að uppfæra söluaðila');
 				});
 			}
 		}).catch( err => {
-			this.toastrService.warning('Hætt við að breyta seljanda', 'Viðvörun');
+			this.toastrService.warning('Hætt við að breyta söluaðila', 'Viðvörun');
 		});
 	}
 
@@ -119,6 +119,7 @@ export class SellerDetailsComponent implements OnInit {
 				this.top10Bought(this.products.slice());
 				this.top10SpentOn(this.products.slice());
 				this.toastrService.success(result.name, 'Vöru bætt við');
+				this.noProducts = false;
 			}, err => {
 				this.toastrService.error(err.statusText, 'Ekki tókst að bæta við vöru');
 			});
