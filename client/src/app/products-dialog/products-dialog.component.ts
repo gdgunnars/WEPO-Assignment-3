@@ -30,7 +30,6 @@ export class ProductsDialogComponent implements OnInit {
 		&& this.product.quantitySold !== undefined) {
 			this.activeModal.close(this.product);
 		} else {
-			// TODO: find out why this is undefined during testing...
 			this.toastrService.warning('Vinsamlegast fylltu út í allar viðeigandi upplýsingar', 'Viðvörun');
 		}
 	}
