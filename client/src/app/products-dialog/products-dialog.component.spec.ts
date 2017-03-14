@@ -165,7 +165,6 @@ describe('ProductsDialogComponent', () => {
 			expect(mockModal.close).not.toHaveBeenCalled();
 		});
 
-		// TODO: find out why I keep getting undefined for ToastrService in component
 		it('should display a toastr warning when form hasnt been filled', () => {
 			// Arrange:
 			component.product = {
