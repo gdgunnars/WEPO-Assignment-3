@@ -66,7 +66,7 @@ export class ListSellersComponent implements OnInit {
 	}
 
 	editSeller(seller: Seller) {
-		const index = this.sellers.indexOf(seller)
+		const index = this.sellers.indexOf(seller);
 		const modalInstance = this.modalService.open(SellerDialogComponent);
 		modalInstance.componentInstance.seller = Object.assign({}, seller);
 		modalInstance.result.then(obj => {

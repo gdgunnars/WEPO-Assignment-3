@@ -35,7 +35,7 @@ describe('ListSellersComponent', () => {
 									fnError();
 								}
 							}
-						}
+						};
 					}
 				},
 				componentInstance: {
@@ -293,7 +293,7 @@ describe('ListSellersComponent', () => {
 	});
 
 	describe('when editing seller fails', () => {
-		it('should not change user and display an error message', () => {
+		it('should not edit user since nothing has changed', () => {
 			// Arrange:
 			const seller = {
 				id: 2,
@@ -301,11 +301,11 @@ describe('ListSellersComponent', () => {
 				category: 'Viður',
 				imagePath: 'http://www.timbur.is/timbur.jpg'
 			};
-			mockService.seller = {
+			mockModal.seller = {
 				id: 2,
-				name: 'Kalli',
+				name: 'Karl',
 				category: 'Viður',
-				imagePath: ''
+				imagePath: 'http://www.timbur.is/timbur.jpg'
 			};
 
 			component.sellers = [];
@@ -317,7 +317,91 @@ describe('ListSellersComponent', () => {
 
 			// Act:
 			component.editSeller(seller);
-			expect(component.sellers[0]).not.toBe(mockService.seller);
+			expect(component.sellers[0]).not.toBe(mockModal.seller);
+			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should not edit user since objects names dont match so should display an error message', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockModal.seller = {
+				id: 2,
+				name: 'Kalli',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+
+			component.sellers = [];
+			component.sellers.push(seller);
+
+			mockService.successEditSeller = false;
+			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
+			expect(component.sellers[0]).not.toBe(mockModal.seller);
+			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should not edit user since objects categories dont match so should display an error message', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockModal.seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viðar',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+
+			component.sellers = [];
+			component.sellers.push(seller);
+
+			mockService.successEditSeller = false;
+			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
+			expect(component.sellers[0]).not.toBe(mockModal.seller);
+			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should not edit user since objects imagepaths dont match so should display an error message', () => {
+			// Arrange:
+			const seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timbur.is/timbur.jpg'
+			};
+			mockModal.seller = {
+				id: 2,
+				name: 'Karl',
+				category: 'Viður',
+				imagePath: 'http://www.timb.is/timbur.jpg'
+			};
+
+			component.sellers = [];
+			component.sellers.push(seller);
+
+			mockService.successEditSeller = false;
+			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
+
+			// Act:
+			component.editSeller(seller);
+			expect(component.sellers[0]).not.toBe(mockModal.seller);
 			expect(mockToastrService.error).toHaveBeenCalled();
 		});
 

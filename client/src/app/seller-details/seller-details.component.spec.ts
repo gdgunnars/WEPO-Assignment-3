@@ -318,6 +318,9 @@ describe('SellerDetailsComponent', () => {
 				category: 'Timbur',
 				imagePath: ''
 			};
+
+			const oldSeller = component.seller;
+			
 			mockModal.seller = {
 				id: 2,
 				name: 'Kalli',
@@ -329,7 +332,7 @@ describe('SellerDetailsComponent', () => {
 
 			// Act:
 			component.editSeller();
-			expect(component.seller).toBe(component.seller);
+			expect(component.seller).toBe(oldSeller);
 		});
 
 		it('should  display an error message if service failed', () => {
