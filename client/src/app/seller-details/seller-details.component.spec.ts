@@ -496,7 +496,7 @@ describe('SellerDetailsComponent', () => {
 	});
 
 	describe('when editing a product successfully', () => {
-		it('should edit the program in the list of products', () => {
+		it('should edit the product in the list of products', () => {
 			// Arrange:
 			mockService.product = {
 				id: 1,
@@ -517,16 +517,19 @@ describe('SellerDetailsComponent', () => {
 			component.products = [];
 			component.products.push(mockService.product);
 			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
 
 			// Act:
 			component.onProductEdit(mockService.product);
-			expect(component.products[0]).toBe(mockService.updatedProduct);
+			expect(component.products[0].name).toBe(mockService.updatedProduct.name);
+			expect(component.products[0].price).toBe(mockService.updatedProduct.price);
+			expect(component.products[0].imagePath).toBe(mockService.updatedProduct.imagePath);
 			expect(mockToastrService.success).toHaveBeenCalled();
 		});
 	});
 
 	describe('when editing a product fails', () => {
-		it('should not edit the program in the list of products', () => {
+		it('should not edit the product in the list of products', () => {
 			// Arrange:
 			mockService.product = {
 				id: 1,
@@ -548,6 +551,7 @@ describe('SellerDetailsComponent', () => {
 			component.products.push(mockService.product);
 			mockService.successEditProduct = false;
 			mockModal.pressedOk = true;
+			mockToastrService.error.calls.reset();
 
 			// Act:
 			component.onProductEdit(mockService.product);

@@ -136,7 +136,10 @@ export class SellerDetailsComponent implements OnInit {
 		modalInstance.componentInstance.editing = true;
 		modalInstance.result.then(obj => {
 			this.service.editProduct(this.sellerId, obj).subscribe( result => {
-				this.products[index] = result['product'];
+				this.products[index].name = result['product'].name;
+				this.products[index].price = result['product'].price;
+				this.products[index].imagePath = result['product'].imagePath;
+				//this.products[index] = result['product'];
 				this.toastrService.success(product.name, 'Aðgerð tókst');
 			}, err => {
 				this.toastrService.error(err.statusText, 'Ekki tókst að breyta vöru');
