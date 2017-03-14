@@ -18,6 +18,7 @@ export class ListSellersComponent implements OnInit {
 	sellers: Seller[];
 	finishedLoading = false;
 	noSellers = true;
+	errorGettingSellers = false;
 
 	constructor(private router: Router,
 				private service: SellersService,
@@ -32,7 +33,7 @@ export class ListSellersComponent implements OnInit {
 		if (id && id !== 0) {
 			this.router.navigate([`/sellers/details/${id}`]);
 		} else {
-			this.toastrService.warning('Þessi seljandi er ekki til', 'Obbs');
+			this.toastrService.warning('Þessi söluaðili er ekki til', 'Viðvörun');
 		}
 	}
 
@@ -44,8 +45,8 @@ export class ListSellersComponent implements OnInit {
 				this.noSellers = false;
 			}
 		}, err => {
-			this.finishedLoading = true;
-			this.toastrService.warning('Ekki tókst að sækja seljendur', 'VILLA');
+			this.errorGettingSellers = true;
+			this.toastrService.warning('Ekki tókst að sækja söluaðila', 'Viðvörun');
 		});
 	}
 
@@ -55,10 +56,12 @@ export class ListSellersComponent implements OnInit {
 			this.service.addSeller(obj).subscribe( result => {
 				// The seller was added successfully
 				this.sellers.push(result);
-				this.toastrService.success('Seljandinn var skráður', 'Æði');
+				this.toastrService.success('Söluaðili var skráður', 'Aðgerð tókst');
 			}, err => {
-				this.toastrService.error('Seljandanum var ekki bætt við', 'Villa kom upp');
+				this.toastrService.error('Söluaðila var ekki bætt við', 'Villa kom upp');
 			});
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að bæta við söluaðila', 'Viðvörun');
 		});
 	}
 }

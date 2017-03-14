@@ -20,6 +20,9 @@ export class SellerDetailsComponent implements OnInit {
 	products: SellerProduct[];
 	top10: SellerProduct[];
 	top10Spent: SellerProduct[];
+	finishedLoading = false;
+	noProducts = true;
+	errorGettingProducts = false;
 
 	constructor(private service: SellersService,
 				private route: ActivatedRoute,
@@ -46,7 +49,12 @@ export class SellerDetailsComponent implements OnInit {
 			this.products = result;
 			this.top10Bought(this.products.slice());
 			this.top10SpentOn(this.products.slice());
+			this.finishedLoading = true;
+			if (this.products.length > 0) {
+				this.noProducts = false;
+			}
 		}, err => {
+			this.errorGettingProducts = true;
 			// Was not able to get Products for seller id
 			// Show message in html
 		});
@@ -87,11 +95,13 @@ export class SellerDetailsComponent implements OnInit {
 					// The seller was updated successfully
 					this.seller = result;
 					const msg = 'Seljandi ' + result.name + ' var uppfærður';
-					this.toastrService.success('', msg);
+					this.toastrService.success(msg, 'Aðgerð tókst');
 				}, err => {
-					this.toastrService.error(err.statusText, 'Villa, ekki tókst að uppfæra');
+					this.toastrService.error(err.statusText, 'Ekki tókst að uppfæra söluaðila');
 				});
 			}
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að breyta seljanda', 'Viðvörun');
 		});
 	}
 
@@ -110,8 +120,10 @@ export class SellerDetailsComponent implements OnInit {
 				this.top10SpentOn(this.products.slice());
 				this.toastrService.success(result.name, 'Vöru bætt við');
 			}, err => {
-				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+				this.toastrService.error(err.statusText, 'Ekki tókst að bæta við vöru');
 			});
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að bæta við vöru', 'Viðvörun');
 		});
 	}
 
@@ -124,10 +136,12 @@ export class SellerDetailsComponent implements OnInit {
 		modalInstance.result.then(obj => {
 			this.service.editProduct(this.sellerId, obj).subscribe( result => {
 				this.products[index] = result['product'];
-				this.toastrService.success(product.name, 'Vöru var breytt');
+				this.toastrService.success(product.name, 'Aðgerð tókst');
 			}, err => {
-				this.toastrService.error(err.statusText, 'Obbs, einhvað fór úrskeiðis');
+				this.toastrService.error(err.statusText, 'Ekki tókst að breyta vöru');
 			});
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að breyta vöru', 'Viðvörun');
 		});
 	}
 

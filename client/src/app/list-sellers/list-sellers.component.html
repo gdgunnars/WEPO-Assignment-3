@@ -7,8 +7,16 @@
 			<button type="button" class="btn btn-primary" (click)="addSeller()"> Bæta við Söluaðila</button>
 		</div>
 	</div>
+	<div *ngIf="errorGettingSellers">
+		<p>
+			<ngb-alert [dismissible]="false" type="warning">
+				Eitthvað fór úrskeiðis.
+			</ngb-alert>
+		</p>
+	</div>
 	<div *ngIf="finishedLoading">
-			<div class="col-sm-12" [hidden]="noSellers" id="list-sellers">
+		<div *ngIf="!noSellers">
+			<div class="col-sm-12" id="list-sellers">
 				<table class="table table-hover">
 					<thead class="thead-inverse">
 						<tr>
@@ -32,7 +40,8 @@
 					</tbody>
 				</table>
 			</div>
-		<div [hidden]="!noSellers" id="no-sellers">
+		</div>
+		<div *ngIf="noSellers">
 			<p>
 				<ngb-alert [dismissible]="false" type="info">
 					Engir söluaðilar til að birta!

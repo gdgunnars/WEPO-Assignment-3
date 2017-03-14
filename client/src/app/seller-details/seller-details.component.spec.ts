@@ -1,15 +1,16 @@
 /* tslint:disable:no-unused-variable */
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
-import {DebugElement, CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
+import { DebugElement, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-import {SellerDetailsComponent} from './seller-details.component';
-import {SellersService} from '../sellers.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import {Observable} from 'rxjs/Rx';
-import {ActivatedRoute} from '@angular/router';
-import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import { SellerDetailsComponent } from './seller-details.component';
+import { SellersService } from '../sellers.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs/Rx';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { ToastrService } from 'ngx-toastr';
+import { } from 'jasmine';
 
 export class ActivatedRouteStub {
 	// ActivatedRoute.params is Observable
@@ -33,6 +34,7 @@ describe('SellerDetailsComponent', () => {
 	let component: SellerDetailsComponent;
 	let fixture: ComponentFixture<SellerDetailsComponent>;
 	const activatedRoute = new ActivatedRouteStub();
+	let de: DebugElement;
 
 	const  mockModal = {
 		pressedOk: true,
@@ -45,12 +47,17 @@ describe('SellerDetailsComponent', () => {
 		open: function() {
 			return {
 				result: {
-					then: function(fnOk, fnCancel) {
+					then: function(fnOk) {
 						if (mockModal.pressedOk === true) {
 							fnOk(mockModal.seller);
-						} else {
-							fnCancel('error');
 						}
+						return {
+							catch: function(fnError) {
+								if (!mockModal.pressedOk) {
+									fnError();
+								}
+							}
+						};
 					}
 				},
 				componentInstance: {
@@ -217,9 +224,10 @@ describe('SellerDetailsComponent', () => {
 	});
 
 	describe('when getting seller by Id fails', () => {
-		it('should display an error message', () => {
+		it('should display a toastr error message', () => {
 			// Arrange:
 			mockService.successGetSeller = false;
+			mockToastrService.error.calls.reset();
 
 			// Act:
 			component.getSellerById(1);
@@ -247,13 +255,31 @@ describe('SellerDetailsComponent', () => {
 	});
 
 	describe('when getting seller products fails', () => {
-		it('should display an error message', () => {
+		it('should display an html error message', () => {
 			// Arrange:
 			mockService.successGetProducts = false;
 
 			// Act:
 			component.getSellerProducts(1);
-			expect(mockToastrService.error).toHaveBeenCalled();
+			fixture.detectChanges();
+			de = fixture.debugElement.query(By.css('ngb-alert'));
+			expect(de.nativeElement.textContent).toContain('Eitthvað fór úrskeiðis');
+		});
+	});
+
+	describe('when seller has no products', () => {
+		it('should display an html info message', () => {
+			// Arrange:
+			mockService.products = [];
+			mockService.successGetProducts = true;
+			component.errorGettingProducts = false;
+
+			// Act:
+			component.getSellerProducts(1);
+			fixture.detectChanges();
+			de = fixture.debugElement.query(By.css('ngb-alert'));
+			expect(component.products.length).toEqual(0);
+			expect(de.nativeElement.textContent).toContain('Þessi söluaðili hefur engar vörur til sölu.');
 		});
 	});
 
@@ -274,6 +300,7 @@ describe('SellerDetailsComponent', () => {
 			};
 			mockService.successEditSeller = true;
 			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
 
 			// Act:
 			component.editSeller();
@@ -320,10 +347,22 @@ describe('SellerDetailsComponent', () => {
 				imagePath: ''
 			};
 			mockService.successEditSeller = false;
+			mockToastrService.error.calls.reset();
 
 			// Act:
 			component.editSeller();
 			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should display a toastr warning if modal window closed unexpectedly', () => {
+			// Arrange:
+			mockModal.pressedOk = false;
+			mockService.successAddProduct = true;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.editSeller();
+			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});
 
@@ -410,6 +449,7 @@ describe('SellerDetailsComponent', () => {
 			};
 			component.products = [];
 			mockModal.pressedOk = true;
+			mockToastrService.success.calls.reset();
 
 			// Act:
 			component.addProduct();
@@ -418,7 +458,7 @@ describe('SellerDetailsComponent', () => {
 		});
 	});
 
-	describe('when adding a new product failes', () => {
+	describe('when adding a new product fails', () => {
 		it('should not add new product to the list of products', () => {
 			// Arrange:
 			mockService.product = {
@@ -432,11 +472,23 @@ describe('SellerDetailsComponent', () => {
 			component.products = [];
 			mockModal.pressedOk = true;
 			mockService.successAddProduct = false;
+			mockToastrService.error.calls.reset();
 
 			// Act:
 			component.addProduct();
 			expect(component.products[0]).not.toBe(mockService.product);
 			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should catch error when modal window is unexpectedly closed and display toastr', () => {
+			// Arrange:
+			mockModal.pressedOk = false;
+			mockService.successAddProduct = true;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.addProduct();
+			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});
 
@@ -498,6 +550,25 @@ describe('SellerDetailsComponent', () => {
 			component.onProductEdit(mockService.product);
 			expect(component.products[0]).not.toBe(mockService.updatedProduct);
 			expect(mockToastrService.error).toHaveBeenCalled();
+		});
+
+		it('should catch error when modal window is unexpectedly closed and display toastr', () => {
+			// Arrange:
+			const product = {
+				id: 1,
+				name: 'trefill',
+				price: 1995,
+				quantitySold: 500,
+				quantityInStock: 100,
+				imagePath: 'http://www.example.com/scarf.jpg'
+			};
+			mockModal.pressedOk = false;
+			mockService.successAddProduct = true;
+			mockToastrService.warning.calls.reset();
+
+			// Act:
+			component.onProductEdit(product);
+			expect(mockToastrService.warning).toHaveBeenCalled();
 		});
 	});
 });
