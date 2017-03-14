@@ -39,11 +39,13 @@ describe('ProductCardComponent', () => {
 				imagePath: ''
 			};
 			component.product = sellerProduct;
+
 			// Act
 			component.productUpdate.subscribe(response => {
 				expect(response).toEqual(sellerProduct);
 			});
 			component.onEdit();
+			fixture.detectChanges();
 		});
 	});
 });

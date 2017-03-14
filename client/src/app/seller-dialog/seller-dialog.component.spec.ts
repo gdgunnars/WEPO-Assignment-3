@@ -139,6 +139,16 @@ describe('SellerDialogComponent', () => {
 			// Act:
 			component.onOk();
 			expect(mockModal.close).not.toHaveBeenCalled();
+			// Arrange:
+			component.seller = {
+				id: 0,
+				name: '',
+				category: '',
+				imagePath: 'invalid url'
+			};
+			// Act:
+			component.onOk();
+			expect(mockModal.close).not.toHaveBeenCalled();
 		});
 
 		it('should display a toastr warning when form hasnt been filled', () => {
