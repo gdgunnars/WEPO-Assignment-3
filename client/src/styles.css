@@ -24,6 +24,9 @@ a:not([href]):not([tabindex]) {
 .btn-list-sellers {
   margin-bottom: 0.5rem;
 }
+td:last-child {
+  text-align: right;
+}
 
 /* item styles */
 .card {

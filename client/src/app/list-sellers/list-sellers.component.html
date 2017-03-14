@@ -23,20 +23,24 @@
 							<th></th>
 							<th> Seljandi </th>
 							<th> Flokkur </th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody class="table-striped">
-							<tr *ngFor="let s of sellers" (click)="GoToSellertDtl([s.id])">
-								<td>
+							<tr *ngFor="let s of sellers">
+								<td (click)="GoToSellertDtl([s.id])">
 									<div class="card sel-list">
 										<img class="img-fluid img-thumbnail rounded sel-list" src="{{s.imagePath}}" alt="Seller Profile" width="50" />
 									</div>
 								</td>
-								<td> 
+								<td (click)="GoToSellertDtl([s.id])"> 
 									{{s.name}}
 								</td>
-								<td> 
+								<td (click)="GoToSellertDtl([s.id])"> 
 									{{s.category}}
+								</td>
+								<td>
+									<button (click)="editSeller(s)" class="btn btn-info">Breyta </button>
 								</td>
 							</tr>					
 					</tbody>

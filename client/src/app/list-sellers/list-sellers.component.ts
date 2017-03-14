@@ -64,4 +64,30 @@ export class ListSellersComponent implements OnInit {
 			this.toastrService.warning('Hætt við að bæta við söluaðila', 'Viðvörun');
 		});
 	}
+
+	editSeller(seller: Seller) {
+		const index = this.sellers.indexOf(seller);
+		const modalInstance = this.modalService.open(SellerDialogComponent);
+		modalInstance.componentInstance.seller = Object.assign({}, seller);
+		modalInstance.result.then(obj => {
+			if (!this.sellerEquals(index, obj)) {
+				this.service.editSeller(obj).subscribe( result => {
+					// The seller was updated successfully
+					this.sellers[index] = result;
+					const msg = 'Söluaðili ' + result.name + ' var uppfærður';
+					this.toastrService.success(msg, 'Aðgerð tókst');
+				}, err => {
+					this.toastrService.error(err.statusText, 'Ekki tókst að uppfæra söluaðila');
+				});
+			}
+		}).catch( err => {
+			this.toastrService.warning('Hætt við að breyta söluaðila', 'Viðvörun');
+		});
+	}
+
+	sellerEquals(index: number, obj: Seller) {
+		return (this.sellers[index].name === obj.name &&
+			this.sellers[index].category === obj.category &&
+			this.sellers[index].imagePath === obj.imagePath);
+	}
 }
